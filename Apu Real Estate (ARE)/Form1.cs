@@ -6,5 +6,6 @@ namespace Apu_Real_Estate__ARE_
         {
             InitializeComponent();
         }
+
     }
 }
