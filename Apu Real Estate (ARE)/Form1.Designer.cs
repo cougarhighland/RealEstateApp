@@ -85,6 +85,7 @@
             // 
             // cmbLegalForm
             // 
+            cmbLegalForm.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbLegalForm.FormattingEnabled = true;
             cmbLegalForm.Location = new Point(101, 63);
             cmbLegalForm.Name = "cmbLegalForm";
@@ -343,6 +344,7 @@
             // 
             // cmbTypeEstate
             // 
+            cmbTypeEstate.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbTypeEstate.FormattingEnabled = true;
             cmbTypeEstate.Location = new Point(133, 56);
             cmbTypeEstate.Name = "cmbTypeEstate";
@@ -358,6 +360,7 @@
             btnAdd.TabIndex = 9;
             btnAdd.Text = "Add new";
             btnAdd.UseVisualStyleBackColor = false;
+            btnAdd.Click += btnAdd_Click;
             // 
             // picBoxEstate
             // 
