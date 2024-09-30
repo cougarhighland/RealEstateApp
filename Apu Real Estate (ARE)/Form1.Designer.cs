@@ -43,16 +43,17 @@
             label1 = new Label();
             groupBox3 = new GroupBox();
             groupBox5 = new GroupBox();
-            cmbNotUsed = new ComboBox();
-            label11 = new Label();
-            label10 = new Label();
+            txtObjectSpecific2 = new TextBox();
+            cmbObjectSpecific1 = new ComboBox();
+            lblObjectSpecific2 = new Label();
+            lblObjectSpecific1 = new Label();
             groupBox4 = new GroupBox();
-            cmbResidentialType = new ComboBox();
-            cmbFloor = new ComboBox();
-            cmbRoom = new ComboBox();
-            label9 = new Label();
-            label8 = new Label();
-            label7 = new Label();
+            txtCategory2 = new TextBox();
+            txtCategory1 = new TextBox();
+            cmbCategorySpecific3 = new ComboBox();
+            lblcategorySpecific3 = new Label();
+            lblCategorySpecific2 = new Label();
+            lblCategorySpecific1 = new Label();
             groupBox6 = new GroupBox();
             lblEstateItem = new Label();
             lstEstate = new ListBox();
@@ -129,6 +130,7 @@
             // 
             // cmbCountry
             // 
+            cmbCountry.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbCountry.FormattingEnabled = true;
             cmbCountry.Location = new Point(81, 92);
             cmbCountry.Name = "cmbCountry";
@@ -210,107 +212,121 @@
             // 
             // groupBox5
             // 
-            groupBox5.Controls.Add(cmbNotUsed);
-            groupBox5.Controls.Add(label11);
-            groupBox5.Controls.Add(label10);
+            groupBox5.Controls.Add(txtObjectSpecific2);
+            groupBox5.Controls.Add(cmbObjectSpecific1);
+            groupBox5.Controls.Add(lblObjectSpecific2);
+            groupBox5.Controls.Add(lblObjectSpecific1);
             groupBox5.Location = new Point(300, 40);
             groupBox5.Name = "groupBox5";
-            groupBox5.Size = new Size(232, 100);
+            groupBox5.Size = new Size(242, 100);
             groupBox5.TabIndex = 1;
             groupBox5.TabStop = false;
             groupBox5.Text = "Object-specific";
             // 
-            // cmbNotUsed
+            // txtObjectSpecific2
             // 
-            cmbNotUsed.FormattingEnabled = true;
-            cmbNotUsed.Location = new Point(81, 20);
-            cmbNotUsed.Name = "cmbNotUsed";
-            cmbNotUsed.Size = new Size(109, 23);
-            cmbNotUsed.TabIndex = 15;
+            txtObjectSpecific2.AccessibleDescription = "";
+            txtObjectSpecific2.AccessibleName = "";
+            txtObjectSpecific2.Location = new Point(123, 51);
+            txtObjectSpecific2.Name = "txtObjectSpecific2";
+            txtObjectSpecific2.Size = new Size(109, 23);
+            txtObjectSpecific2.TabIndex = 16;
             // 
-            // label11
+            // cmbObjectSpecific1
             // 
-            label11.AutoSize = true;
-            label11.Location = new Point(6, 59);
-            label11.Name = "label11";
-            label11.Size = new Size(77, 15);
-            label11.TabIndex = 14;
-            label11.Text = "No. of rooms";
+            cmbObjectSpecific1.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbObjectSpecific1.FormattingEnabled = true;
+            cmbObjectSpecific1.Location = new Point(123, 22);
+            cmbObjectSpecific1.Name = "cmbObjectSpecific1";
+            cmbObjectSpecific1.Size = new Size(109, 23);
+            cmbObjectSpecific1.TabIndex = 15;
             // 
-            // label10
+            // lblObjectSpecific2
             // 
-            label10.AutoSize = true;
-            label10.Location = new Point(6, 28);
-            label10.Name = "label10";
-            label10.Size = new Size(58, 15);
-            label10.TabIndex = 13;
-            label10.Text = "Not used!";
+            lblObjectSpecific2.AutoSize = true;
+            lblObjectSpecific2.Location = new Point(6, 59);
+            lblObjectSpecific2.Name = "lblObjectSpecific2";
+            lblObjectSpecific2.Size = new Size(89, 15);
+            lblObjectSpecific2.TabIndex = 14;
+            lblObjectSpecific2.Text = "ObjectSpecific2";
+            // 
+            // lblObjectSpecific1
+            // 
+            lblObjectSpecific1.AutoSize = true;
+            lblObjectSpecific1.Location = new Point(6, 28);
+            lblObjectSpecific1.Name = "lblObjectSpecific1";
+            lblObjectSpecific1.Size = new Size(89, 15);
+            lblObjectSpecific1.TabIndex = 13;
+            lblObjectSpecific1.Text = "ObjectSpecific1";
             // 
             // groupBox4
             // 
-            groupBox4.Controls.Add(cmbResidentialType);
-            groupBox4.Controls.Add(cmbFloor);
-            groupBox4.Controls.Add(cmbRoom);
-            groupBox4.Controls.Add(label9);
-            groupBox4.Controls.Add(label8);
-            groupBox4.Controls.Add(label7);
+            groupBox4.Controls.Add(txtCategory2);
+            groupBox4.Controls.Add(txtCategory1);
+            groupBox4.Controls.Add(cmbCategorySpecific3);
+            groupBox4.Controls.Add(lblcategorySpecific3);
+            groupBox4.Controls.Add(lblCategorySpecific2);
+            groupBox4.Controls.Add(lblCategorySpecific1);
             groupBox4.Location = new Point(48, 183);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(223, 111);
+            groupBox4.Size = new Size(266, 111);
             groupBox4.TabIndex = 1;
             groupBox4.TabStop = false;
             groupBox4.Text = "Category-specific";
             // 
-            // cmbResidentialType
+            // txtCategory2
             // 
-            cmbResidentialType.FormattingEnabled = true;
-            cmbResidentialType.Location = new Point(102, 78);
-            cmbResidentialType.Name = "cmbResidentialType";
-            cmbResidentialType.Size = new Size(109, 23);
-            cmbResidentialType.TabIndex = 14;
+            txtCategory2.AccessibleDescription = "";
+            txtCategory2.AccessibleName = "";
+            txtCategory2.Location = new Point(148, 48);
+            txtCategory2.Name = "txtCategory2";
+            txtCategory2.Size = new Size(109, 23);
+            txtCategory2.TabIndex = 15;
             // 
-            // cmbFloor
+            // txtCategory1
             // 
-            cmbFloor.FormattingEnabled = true;
-            cmbFloor.Location = new Point(85, 49);
-            cmbFloor.Name = "cmbFloor";
-            cmbFloor.Size = new Size(109, 23);
-            cmbFloor.TabIndex = 13;
+            txtCategory1.AccessibleDescription = "";
+            txtCategory1.AccessibleName = "";
+            txtCategory1.Location = new Point(148, 20);
+            txtCategory1.Name = "txtCategory1";
+            txtCategory1.Size = new Size(109, 23);
+            txtCategory1.TabIndex = 8;
             // 
-            // cmbRoom
+            // cmbCategorySpecific3
             // 
-            cmbRoom.FormattingEnabled = true;
-            cmbRoom.Location = new Point(85, 20);
-            cmbRoom.Name = "cmbRoom";
-            cmbRoom.Size = new Size(109, 23);
-            cmbRoom.TabIndex = 10;
+            cmbCategorySpecific3.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbCategorySpecific3.FormattingEnabled = true;
+            cmbCategorySpecific3.Location = new Point(148, 77);
+            cmbCategorySpecific3.Name = "cmbCategorySpecific3";
+            cmbCategorySpecific3.Size = new Size(109, 23);
+            cmbCategorySpecific3.TabIndex = 14;
             // 
-            // label9
+            // lblcategorySpecific3
             // 
-            label9.AutoSize = true;
-            label9.Location = new Point(6, 85);
-            label9.Name = "label9";
-            label9.Size = new Size(90, 15);
-            label9.TabIndex = 12;
-            label9.Text = "Residential type";
+            lblcategorySpecific3.AutoSize = true;
+            lblcategorySpecific3.Location = new Point(6, 85);
+            lblcategorySpecific3.Name = "lblcategorySpecific3";
+            lblcategorySpecific3.Size = new Size(100, 15);
+            lblcategorySpecific3.TabIndex = 12;
+            lblcategorySpecific3.Text = "categorySpecific3";
             // 
-            // label8
+            // lblCategorySpecific2
             // 
-            label8.AutoSize = true;
-            label8.Location = new Point(6, 59);
-            label8.Name = "label8";
-            label8.Size = new Size(73, 15);
-            label8.TabIndex = 11;
-            label8.Text = "No. of floors";
+            lblCategorySpecific2.AutoSize = true;
+            lblCategorySpecific2.Location = new Point(6, 59);
+            lblCategorySpecific2.Name = "lblCategorySpecific2";
+            lblCategorySpecific2.Size = new Size(100, 15);
+            lblCategorySpecific2.TabIndex = 11;
+            lblCategorySpecific2.Text = "categorySpecific2";
             // 
-            // label7
+            // lblCategorySpecific1
             // 
-            label7.AutoSize = true;
-            label7.Location = new Point(6, 28);
-            label7.Name = "label7";
-            label7.Size = new Size(77, 15);
-            label7.TabIndex = 10;
-            label7.Text = "No. of rooms";
+            lblCategorySpecific1.AutoSize = true;
+            lblCategorySpecific1.Location = new Point(6, 28);
+            lblCategorySpecific1.Name = "lblCategorySpecific1";
+            lblCategorySpecific1.Size = new Size(100, 15);
+            lblCategorySpecific1.TabIndex = 10;
+            lblCategorySpecific1.Text = "categorySpecific1";
             // 
             // groupBox6
             // 
@@ -350,6 +366,7 @@
             cmbTypeEstate.Name = "cmbTypeEstate";
             cmbTypeEstate.Size = new Size(138, 23);
             cmbTypeEstate.TabIndex = 8;
+            cmbTypeEstate.SelectedIndexChanged += cmbTypeEstate_SelectedIndexChanged;
             // 
             // btnAdd
             // 
@@ -455,15 +472,13 @@
         private Label label5;
         private ComboBox cmbCountry;
         private ComboBox cmbTypeEstate;
-        private Label label9;
-        private Label label8;
-        private Label label7;
-        private ComboBox cmbResidentialType;
-        private ComboBox cmbFloor;
-        private ComboBox cmbRoom;
-        private Label label11;
-        private Label label10;
-        private ComboBox cmbNotUsed;
+        private Label lblcategorySpecific3;
+        private Label lblCategorySpecific2;
+        private Label lblCategorySpecific1;
+        private ComboBox cmbCategorySpecific3;
+        private Label lblObjectSpecific2;
+        private Label lblObjectSpecific1;
+        private ComboBox cmbObjectSpecific1;
         private ListBox lstEstate;
         private Button btnAdd;
         private PictureBox picBoxEstate;
@@ -471,5 +486,8 @@
         private Button btnUpdate;
         private Button btnDelete;
         private Button btnDeleteAll;
+        private TextBox txtCategory2;
+        private TextBox txtCategory1;
+        private TextBox txtObjectSpecific2;
     }
 }
