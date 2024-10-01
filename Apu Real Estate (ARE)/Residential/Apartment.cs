@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace Apu_Real_Estate__ARE_.Residential
 {
-    internal class Apartment
+    public class Apartment: Residential
     {
+        public Apartment() { }
+        public Apartment(NotUsed isUsed, int construction)
+        {
+            NotUsed = isUsed;
+            ConstructionYear = construction;
+        }
     }
 }

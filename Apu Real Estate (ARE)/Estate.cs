@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Apu_Real_Estate__ARE_
 {
@@ -41,7 +42,7 @@ namespace Apu_Real_Estate__ARE_
 
         public override string ToString()
         {
-            return "(" + ID + ")" + address.ToString();
+            return $"({ID}) Address: {address.ToString()}, Legal Form: {legalForm}.";
         }
     }
 }

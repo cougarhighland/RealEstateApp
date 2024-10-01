@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace Apu_Real_Estate__ARE_.Commercial
 {
-    internal class Hotels
+    public class Hotels:Commercial
     {
+        public Hotels() { }
+        public Hotels(Parking isAllowParking, string orgNum) 
+        {
+            AllowParking = isAllowParking;
+            OrganizationNumber = orgNum;
+        }
     }
 }

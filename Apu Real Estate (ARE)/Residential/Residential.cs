@@ -17,7 +17,7 @@ namespace Apu_Real_Estate__ARE_.Residential
         private int numOfRooms;
         private int numOfFloors;
         private NotUsed notUsed;
-        private ResidentialType residentialType;
+        private int constructionYear;
 
         // Properties to access private fields
         public int NumOfRooms
@@ -32,16 +32,21 @@ namespace Apu_Real_Estate__ARE_.Residential
             set { numOfFloors = value; }
         }
 
-        public ResidentialType Type
-        {
-            get { return residentialType; }
-            set { residentialType = value; }
-        }
-
         public NotUsed NotUsed
         {
             get { return notUsed; }
             set { notUsed = value; }
+        }
+
+        public int ConstructionYear
+        {
+            get { return constructionYear; }
+            set { constructionYear = value; }
+        }
+
+        public override string ToString()
+        {
+            return $"Floor {numOfFloors.ToString()}m^2, NumRoom {numOfRooms.ToString()} ,isUsed: {notUsed}, constructionYear: {constructionYear.ToString()}.";
         }
     }
 }

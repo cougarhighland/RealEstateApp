@@ -13,6 +13,14 @@ namespace Apu_Real_Estate__ARE_
         private string zipCode;
         private Countries country;
 
+        public Address(string str, string ct, string zip, Countries ctr)
+        {
+            this.street = str;
+            this.city = ct;
+            this.zipCode = zip;
+            this.country = ctr;
+        }
+
         public string Street
         {
             get { return street; }

@@ -10,6 +10,8 @@ namespace Apu_Real_Estate__ARE_.Institutional
     {
         private string entity;
         private LocationType locationType;
+        private int numRooms;
+        private double area;
 
         // Properties with getters and setters
         public string Entity
@@ -22,6 +24,23 @@ namespace Apu_Real_Estate__ARE_.Institutional
         {
             get { return locationType; }
             set { locationType = value; }
+        }
+
+        public int NumberOfRooms
+        {
+            get { return numRooms; }
+            set { numRooms = value; }
+        }
+
+        public double Area
+        {
+            get { return area; }
+            set { area = value; }
+        }
+
+        public override string ToString()
+        {
+            return $"Area {area.ToString()}m^2, NumRoom {numRooms.ToString()} ,locationType: {locationType}, owner: {entity}.";
         }
     }
 }

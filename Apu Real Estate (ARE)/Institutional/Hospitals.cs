@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Apu_Real_Estate__ARE_.Institutional
 {
-    internal class Hospitals
+    public class Hospitals : Institutional
     {
+        public Hospitals() { }
     }
 }

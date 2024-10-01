@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace Apu_Real_Estate__ARE_.Commercial
 {
-    internal class Warehouse
+    public class Warehouse : Commercial
     {
+        public Warehouse() { }
+        public Warehouse(Parking isAllowParking, string orgNum) 
+        {
+            AllowParking = isAllowParking;
+            OrganizationNumber = orgNum;
+        }
     }
 }
