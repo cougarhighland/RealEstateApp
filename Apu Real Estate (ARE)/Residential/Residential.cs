@@ -44,9 +44,9 @@ namespace Apu_Real_Estate__ARE_.Residential
             set { constructionYear = value; }
         }
 
-        public override string ToString()
+        public string Print()
         {
-            return $"Floor {numOfFloors.ToString()}m^2, NumRoom {numOfRooms.ToString()} ,isUsed: {notUsed}, constructionYear: {constructionYear.ToString()}.";
+            return $"Floor {numOfFloors.ToString()},Number of Room {numOfRooms.ToString()},isUsed {notUsed},constructionYear {constructionYear.ToString()}";
         }
     }
 }

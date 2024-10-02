@@ -42,7 +42,7 @@ namespace Apu_Real_Estate__ARE_
 
         public override string ToString()
         {
-            return $"({ID}) Address: {address.ToString()}, Legal Form: {legalForm}.";
+            return $"ID {ID},Address {address.ToString()},Legal Form {legalForm},";
         }
     }
 }

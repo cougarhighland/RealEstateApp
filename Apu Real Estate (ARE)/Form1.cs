@@ -1,6 +1,8 @@
 using Apu_Real_Estate__ARE_.Commercial;
 using Apu_Real_Estate__ARE_.Institutional;
 using Apu_Real_Estate__ARE_.Residential;
+using System.Diagnostics.Eventing.Reader;
+using System.IO;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -12,6 +14,7 @@ namespace Apu_Real_Estate__ARE_
 
         private Estate estate;
         private System.Drawing.Image placeholder;
+        private string printData;
 
         //create a file dilog
         private OpenFileDialog file = new OpenFileDialog();
@@ -28,18 +31,56 @@ namespace Apu_Real_Estate__ARE_
             placeholder = picBoxEstate.Image;
         }
 
-        private void AddEstate()
+        // Add data from the form to estate
+        private void AddEstate(bool isUpdate)
         {
             CreateEstate();
-            ReadGeneralData();
+            ReadGeneralData(isUpdate);
             ReadCategoryData();
         }
 
+        //update GUI
         private void UpdateGUI()
         {
-            lstEstate.Items.Add(estate);
+            //get estate data in type of string
+            GetStringToPrint();
+            //check list estate should not more than 1 object
+            if (lstEstate.Items.Count == 0)
+            {
+                //put estate object to listbox
+                lstEstate.Items.Add(printData);
+                ResetAllTextField();
+            }
         }
 
+        //get estate data based on estate type, convert to string and combine with address, id, legal form, estate type
+        private string GetStringToPrint()
+        {
+            EstateType estateType = (EstateType)cmbTypeEstate.SelectedIndex;
+            string data = "";
+            //validate estate type and assign data to correct value of that estate type
+            switch (estateType)
+            {
+                case EstateType.Residential:
+                    ResidentialType residentialType = (ResidentialType)cmbCategorySpecific3.SelectedIndex;
+                    data = $"{EstateType.Residential.ToString()},{residentialType},{((Residential.Residential)estate).Print()}";
+                    break;
+
+                case EstateType.Commercial:
+                    CommercialType commercialType = (CommercialType)cmbCategorySpecific3.SelectedIndex;
+                    data = $"{EstateType.Commercial.ToString()},{commercialType},{((Commercial.Commercial)estate).Print()}";
+                    break;
+
+                case EstateType.Institutional:
+                    InstitutionalType institutionalType = (InstitutionalType)cmbCategorySpecific3.SelectedIndex;
+                    data = $"{EstateType.Institutional.ToString()},{institutionalType},{((Institutional.Institutional)estate).Print()}";
+                    break;
+            }
+            printData = estate.ToString() + data;
+            return printData;
+        }
+
+        //read category data from the form
         private void ReadCategoryData()
         {
             EstateType category = (EstateType)cmbTypeEstate.SelectedIndex;
@@ -66,6 +107,7 @@ namespace Apu_Real_Estate__ARE_
             }
         }
 
+        //assign category data to residential type estate
         private void AssignResidentialData(int numRooms, int numFloors)
         {
             var residentialEstate = (Residential.Residential)estate;
@@ -73,6 +115,7 @@ namespace Apu_Real_Estate__ARE_
             residentialEstate.NumOfRooms = numRooms;
         }
 
+        //assign category data to Commercial type estate
         private void AssignCommercialData(int numRooms, double area)
         {
             var commercialEstate = (Commercial.Commercial)estate;
@@ -80,41 +123,52 @@ namespace Apu_Real_Estate__ARE_
             commercialEstate.NumberOfRooms = numRooms;
         }
 
+        //assign category data to Commercial type estate
         private void AssignInstitutionalData(int numRooms, double area)
         {
             var institutionalEstate = (Institutional.Institutional)estate;
             institutionalEstate.NumberOfRooms = numRooms;
             institutionalEstate.Area = area;
         }
-
-        private void ReadGeneralData()
+        //read img path, address, legalform from the form
+        private void ReadGeneralData(bool isUpdate)
         {
-            if (estate != null) 
-            { 
-                //set id
-                estate.ID = idIndex;
-                idIndex++;
-
+            if (estate != null)
+            {
+                //set id, idIndex is not changed if update button pressed
+                if (!isUpdate)
+                {
+                    estate.ID = idIndex;
+                    idIndex++;
+                }
+                else 
+                {
+                    estate.ID = idIndex;
+                }
                 //set address, legal form,
                 estate.Address = new Address(txtStreet.Text, txtCity.Text, txtZipCode.Text, (Countries)cmbCountry.SelectedIndex);
                 estate.LegalForm = (LegalForm)cmbLegalForm.SelectedIndex;
 
                 //set img file path
-                if (file.ShowDialog() == DialogResult.OK) 
-                {
-                    if (!string.IsNullOrEmpty(file.FileName)) 
-                    {
-                        estate.ImagePath = file.FileName; 
-                    }
-                }
-
+                //if (file.ShowDialog() == DialogResult.OK)
+                //{
+                //    if (!string.IsNullOrEmpty(file.FileName))
+                //    {
+                //        estate.ImagePath = file.FileName;
+                //        picBoxEstate.Image = Image.FromFile(estate.ImagePath);
+                //    }
+                //}
+                // hardcoded path
+                estate.ImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Resources\Asg1.jpg");
+                picBoxEstate.Image = Image.FromFile(estate.ImagePath);
             }
         }
+
         private void CreateEstate()
         {
             estate = null;
             EstateType estateType = (EstateType)cmbTypeEstate.SelectedIndex;
-            switch (estateType) 
+            switch (estateType)
             {
                 case EstateType.Residential:
                     CreateResidentialType();
@@ -140,13 +194,13 @@ namespace Apu_Real_Estate__ARE_
             switch (institutionalType)
             {
                 case InstitutionalType.Hospital:
-                    estate = new Hospitals();
+                    estate = new Hospitals(locationType, owner);
                     break;
                 case InstitutionalType.School:
-                    estate = new Schools();
+                    estate = new Schools(locationType, owner);
                     break;
                 case InstitutionalType.University:
-                    estate = new Universities();
+                    estate = new Universities(locationType, owner);
                     break;
             }
         }
@@ -155,22 +209,22 @@ namespace Apu_Real_Estate__ARE_
             //get category data
             int numRooms = Int32.Parse(txtCategory1.Text);
             double area = Double.Parse(txtCategory2.Text);
-            OrgType commercialType = (OrgType)cmbCategorySpecific3.SelectedIndex;
+            CommercialType commercialType = (CommercialType)cmbCategorySpecific3.SelectedIndex;
             //get object specified data
             Parking isAllowParking = (Parking)cmbObjectSpecific1.SelectedIndex;
             string orgNum = txtObjectSpecific2.Text;
             switch (commercialType)
             {
-                case OrgType.Factory:
+                case CommercialType.Factory:
                     estate = new Factories(isAllowParking, orgNum);
                     break;
-                case OrgType.Hotel:
+                case CommercialType.Hotel:
                     estate = new Hotels(isAllowParking, orgNum);
                     break;
-                case OrgType.Shop:
+                case CommercialType.Shop:
                     estate = new Shops(isAllowParking, orgNum);
                     break;
-                case OrgType.Warehouse:
+                case CommercialType.Warehouse:
                     estate = new Warehouse(isAllowParking, orgNum);
                     break;
             }
@@ -185,7 +239,7 @@ namespace Apu_Real_Estate__ARE_
             //get object specified data
             NotUsed notUsed = (NotUsed)cmbObjectSpecific1.SelectedIndex;
             int constructionYear = Int32.Parse(txtObjectSpecific2.Text);
-            switch (residentialType) 
+            switch (residentialType)
             {
                 case ResidentialType.Apartment:
                     estate = new Apartment(notUsed, constructionYear);
@@ -233,7 +287,7 @@ namespace Apu_Real_Estate__ARE_
             lblCategorySpecific1.Text = "No. of rooms";
             lblCategorySpecific2.Text = "Area (optional unit)";
             lblcategorySpecific3.Text = "Organization type";
-            cmbCategorySpecific3.DataSource = Enum.GetValues(typeof(OrgType));
+            cmbCategorySpecific3.DataSource = Enum.GetValues(typeof(CommercialType));
 
             lblObjectSpecific1.Text = "Parking";
             cmbObjectSpecific1.DataSource = Enum.GetValues(typeof(Parking));
@@ -252,16 +306,136 @@ namespace Apu_Real_Estate__ARE_
             lblObjectSpecific2.Text = "Entity";
         }
 
+        private void FillDataToForm() 
+        {
+            string[] partsData = printData.Split(",");
 
+            for (int i = 0; i < partsData.Length; i++)
+            {
+                partsData[i] = RemovePrefix(partsData[i], "Address ");
+                partsData[i] = RemovePrefix(partsData[i], "Legal Form ");
+
+                if (partsData[6] == "Residential")
+                {
+                    partsData[i] = RemovePrefix(partsData[i], "Floor ");
+                    partsData[i] = RemovePrefix(partsData[i], "Number of Room ");
+                    partsData[i] = RemovePrefix(partsData[i], "isUsed ");
+                    partsData[i] = RemovePrefix(partsData[i], "constructionYear ");
+                }
+                else if (partsData[6] == "Commercial")
+                {
+                    if (partsData[i].StartsWith("Area "))
+                    {
+                        partsData[i] = ExtractAreaValue(partsData[i], "m");
+                    }
+                    partsData[i] = RemovePrefix(partsData[i], "Number of Room ");
+                    partsData[i] = RemovePrefix(partsData[i], "Organization number ");
+                    partsData[i] = RemovePrefix(partsData[i], "Parking Allowance ");
+                }
+                else // Institutional or other types
+                {
+                    if (partsData[i].StartsWith("Area "))
+                    {
+                        partsData[i] = ExtractAreaValue(partsData[i], "m");
+                    }
+                    partsData[i] = RemovePrefix(partsData[i], "Number of Room ");
+                    partsData[i] = RemovePrefix(partsData[i], "locationType ");
+                    partsData[i] = RemovePrefix(partsData[i], "owner ");
+                }
+            }
+
+
+            cmbTypeEstate.SelectedItem = Enum.Parse(typeof(EstateType), partsData[6]);
+            cmbLegalForm.SelectedItem = Enum.Parse(typeof(LegalForm), partsData[5]);
+
+            //fill in address
+            txtStreet.Text = partsData[1];
+            txtZipCode.Text = partsData[2];
+            txtCity.Text = partsData[3];
+            cmbCountry.SelectedItem = Enum.Parse(typeof(Countries), partsData[4]);
+
+           //fill in 
+            txtCategory2.Text = partsData[8];
+            txtCategory1.Text = partsData[9];
+            txtObjectSpecific2.Text = partsData[11];
+
+            EstateType estatetype = (EstateType)cmbTypeEstate.SelectedIndex;
+            switch (estatetype) 
+            {
+                case EstateType.Residential:
+                    cmbCategorySpecific3.SelectedItem = Enum.Parse(typeof(ResidentialType), partsData[7]); 
+                    cmbObjectSpecific1.SelectedItem = Enum.Parse(typeof(NotUsed), partsData[10]);
+                    break;
+                case EstateType.Commercial:
+                    cmbCategorySpecific3.SelectedItem = Enum.Parse(typeof(CommercialType), partsData[7]);
+                    cmbObjectSpecific1.SelectedItem = Enum.Parse(typeof(Parking), partsData[10]);
+                    break;
+                case EstateType.Institutional:
+                    cmbCategorySpecific3.SelectedItem = Enum.Parse(typeof(InstitutionalType), partsData[7]);
+                    cmbObjectSpecific1.SelectedItem = Enum.Parse(typeof(LocationType), partsData[10]);
+                    break;
+            }
+        }
+
+        private string RemovePrefix(string data, string prefix)
+        {
+            return data.StartsWith(prefix) ? data.Replace(prefix, "") : data;
+        }
+
+        private string ExtractAreaValue(string data, string endCharacter)
+        {
+            int startIndex = data.IndexOf(' ') + 1;
+            int endIndex = data.IndexOf(endCharacter);
+            return data.Substring(startIndex, endIndex - startIndex);
+        }
+
+        private void ResetAllTextField()
+        {
+            lblEstateItem.ResetText();
+            txtStreet.ResetText();
+            txtZipCode.ResetText();
+            txtCity.ResetText();
+            txtCategory1.ResetText();
+            txtCategory2.ResetText();
+            txtObjectSpecific2.ResetText();
+        }
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            AddEstate();
+            AddEstate(false);
             UpdateGUI();
         }
 
         private void cmbTypeEstate_SelectedIndexChanged(object sender, EventArgs e)
         {
             CreateCategoryObjectView();
+        }
+
+        private void lstEstate_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Check if an item is selected
+            if (lstEstate.SelectedIndex != -1)
+            {
+                string selectedItem = lstEstate.SelectedItem.ToString();
+                lblEstateItem.Text = selectedItem;
+                FillDataToForm();
+            }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            lstEstate.Items.RemoveAt(lstEstate.SelectedIndex);
+            printData = string.Empty;
+            estate = null;
+            picBoxEstate.Image = null;
+            ResetAllTextField();
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            lstEstate.Items.RemoveAt(lstEstate.SelectedIndex);
+            lblEstateItem.ResetText();
+            AddEstate(true);
+            UpdateGUI();
         }
     }
 }

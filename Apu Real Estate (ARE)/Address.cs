@@ -57,7 +57,7 @@ namespace Apu_Real_Estate__ARE_
         }
         public override string ToString()
         {
-            return $"{street}, {zipCode}, {city}, {country.ToString()}";
+            return $"{street},{zipCode},{city},{country.ToString()}";
         }
     }
 }

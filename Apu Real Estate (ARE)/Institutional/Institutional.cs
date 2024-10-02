@@ -38,9 +38,9 @@ namespace Apu_Real_Estate__ARE_.Institutional
             set { area = value; }
         }
 
-        public override string ToString()
+        public string Print()
         {
-            return $"Area {area.ToString()}m^2, NumRoom {numRooms.ToString()} ,locationType: {locationType}, owner: {entity}.";
+            return $"Area {area.ToString()}m^2,Number of Room {numRooms.ToString()},locationType {locationType},owner {entity}";
         }
     }
 }

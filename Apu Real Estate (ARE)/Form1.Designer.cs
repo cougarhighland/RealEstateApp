@@ -62,7 +62,6 @@
             picBoxEstate = new PictureBox();
             btnUpdate = new Button();
             btnDelete = new Button();
-            btnDeleteAll = new Button();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -357,6 +356,7 @@
             lstEstate.Name = "lstEstate";
             lstEstate.Size = new Size(739, 169);
             lstEstate.TabIndex = 0;
+            lstEstate.SelectedIndexChanged += lstEstate_SelectedIndexChanged;
             // 
             // cmbTypeEstate
             // 
@@ -397,35 +397,25 @@
             btnUpdate.TabIndex = 11;
             btnUpdate.Text = "Update";
             btnUpdate.UseVisualStyleBackColor = false;
+            btnUpdate.Click += btnUpdate_Click;
             // 
             // btnDelete
             // 
             btnDelete.BackColor = SystemColors.Window;
             btnDelete.ForeColor = Color.Red;
-            btnDelete.Location = new Point(319, 568);
+            btnDelete.Location = new Point(599, 570);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(188, 46);
             btnDelete.TabIndex = 12;
             btnDelete.Text = "Delete";
             btnDelete.UseVisualStyleBackColor = false;
-            // 
-            // btnDeleteAll
-            // 
-            btnDeleteAll.BackColor = SystemColors.Window;
-            btnDeleteAll.ForeColor = SystemColors.ActiveCaptionText;
-            btnDeleteAll.Location = new Point(599, 568);
-            btnDeleteAll.Name = "btnDeleteAll";
-            btnDeleteAll.Size = new Size(188, 46);
-            btnDeleteAll.TabIndex = 13;
-            btnDeleteAll.Text = "Delete All";
-            btnDeleteAll.UseVisualStyleBackColor = false;
+            btnDelete.Click += btnDelete_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1347, 626);
-            Controls.Add(btnDeleteAll);
             Controls.Add(btnDelete);
             Controls.Add(btnUpdate);
             Controls.Add(picBoxEstate);
@@ -485,7 +475,6 @@
         private Label lblEstateItem;
         private Button btnUpdate;
         private Button btnDelete;
-        private Button btnDeleteAll;
         private TextBox txtCategory2;
         private TextBox txtCategory1;
         private TextBox txtObjectSpecific2;

@@ -9,5 +9,10 @@ namespace Apu_Real_Estate__ARE_.Institutional
     public class Universities: Institutional
     {
         public Universities() { }
+        public Universities(LocationType lo, string owner)
+        {
+            LocationType = lo;
+            Entity = owner;
+        }
     }
 }

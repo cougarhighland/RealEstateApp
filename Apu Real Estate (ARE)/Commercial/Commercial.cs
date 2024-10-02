@@ -36,9 +36,9 @@ namespace Apu_Real_Estate__ARE_.Commercial
             set { numRooms = value; } 
         }
 
-        public override string ToString()
+        public string Print()
         {
-            return $"Area {area.ToString()}m^2, NumRoom {numRooms.ToString()} ,Orgnum: {orgNr}, Parking Allowance: {isAllowParking}.";
+            return $"Area {area.ToString()}m^2,Number of Room {numRooms.ToString()},Parking Allowance {isAllowParking},Organization number {orgNr}";
         }
     }
 }
