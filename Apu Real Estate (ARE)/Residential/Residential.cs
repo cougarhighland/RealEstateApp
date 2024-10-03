@@ -13,13 +13,13 @@ namespace Apu_Real_Estate__ARE_.Residential
     }
     public abstract class Residential : Estate
     {
-        // Private fields
+        // fields
         private int numOfRooms;
         private int numOfFloors;
         private NotUsed notUsed;
-        private ResidentialType residentialType;
+        private int constructionYear;
 
-        // Properties to access private fields
+        // Properties
         public int NumOfRooms
         {
             get { return numOfRooms; }
@@ -32,16 +32,21 @@ namespace Apu_Real_Estate__ARE_.Residential
             set { numOfFloors = value; }
         }
 
-        public ResidentialType Type
-        {
-            get { return residentialType; }
-            set { residentialType = value; }
-        }
-
         public NotUsed NotUsed
         {
             get { return notUsed; }
             set { notUsed = value; }
+        }
+
+        public int ConstructionYear
+        {
+            get { return constructionYear; }
+            set { constructionYear = value; }
+        }
+        // Method to get a string representation of the Residential estate
+        public string GetDetails()
+        {
+            return $"Floor {numOfFloors.ToString()},Number of Room {numOfRooms.ToString()},isUsed {notUsed},constructionYear {constructionYear.ToString()}";
         }
     }
 }

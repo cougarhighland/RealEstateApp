@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace Apu_Real_Estate__ARE_.Commercial
 {
-    internal class Factories
+    public class Factories : Commercial
     {
+        //constructors
+        public Factories() { }
+        public Factories(Parking isAllowParking, string orgNum)
+        {
+            //set value of isAllowParking and orgnum by setters from Commercial
+            AllowParking = isAllowParking;
+            OrganizationNumber = orgNum;
+        }
     }
 }

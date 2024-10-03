@@ -6,16 +6,11 @@ using System.Threading.Tasks;
 
 namespace Apu_Real_Estate__ARE_
 {
-    public enum FormType
+    //legal form type
+    public enum LegalForm
     {
         Ownership,
         Tenement,
         Rental
-    }
-    public class LegalForm
-    {
-        private FormType form;
-
-        public FormType Form { get { return form; } set { form = value; } }
     }
 }

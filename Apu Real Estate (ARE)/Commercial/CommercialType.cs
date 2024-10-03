@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace Apu_Real_Estate__ARE_.Commercial
 {
-    public enum OrgType
+    //commercial type
+    public enum CommercialType
     {
         Hotel, Shop, Warehouse, Factory
     }
-
+    //isParking type
     public enum Parking
     {
         Yes,
