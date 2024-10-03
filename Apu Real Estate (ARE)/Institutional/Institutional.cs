@@ -8,12 +8,13 @@ namespace Apu_Real_Estate__ARE_.Institutional
 {
     public abstract class Institutional: Estate
     {
+        //Fields
         private string entity;
         private LocationType locationType;
         private int numRooms;
         private double area;
 
-        // Properties with getters and setters
+        //Properties
         public string Entity
         {
             get { return entity; }
@@ -37,8 +38,8 @@ namespace Apu_Real_Estate__ARE_.Institutional
             get { return area; }
             set { area = value; }
         }
-
-        public string Print()
+        // Method to get a string representation of the institutional estate
+        public string GetDetails()
         {
             return $"Area {area.ToString()}m^2,Number of Room {numRooms.ToString()},locationType {locationType},owner {entity}";
         }

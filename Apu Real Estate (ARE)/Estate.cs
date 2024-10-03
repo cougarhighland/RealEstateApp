@@ -10,12 +10,12 @@ namespace Apu_Real_Estate__ARE_
 {
     public abstract class Estate : IEstate
     {
-        //define private variables
+        //fields
         private int id;
         private Address address;
         private string imagePath;
         private LegalForm legalForm;
-
+        //properties
         public int ID 
         { 
             get { return id; }
@@ -40,6 +40,7 @@ namespace Apu_Real_Estate__ARE_
             set { legalForm = value; }
         }
 
+        // Overridden ToString method
         public override string ToString()
         {
             return $"ID {ID},Address {address.ToString()},Legal Form {legalForm},";

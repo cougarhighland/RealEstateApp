@@ -63,17 +63,17 @@ namespace Apu_Real_Estate__ARE_
             {
                 case EstateType.Residential:
                     ResidentialType residentialType = (ResidentialType)cmbCategorySpecific3.SelectedIndex;
-                    data = $"{EstateType.Residential.ToString()},{residentialType},{((Residential.Residential)estate).Print()}";
+                    data = $"{EstateType.Residential.ToString()},{residentialType},{((Residential.Residential)estate).GetDetails()}";
                     break;
 
                 case EstateType.Commercial:
                     CommercialType commercialType = (CommercialType)cmbCategorySpecific3.SelectedIndex;
-                    data = $"{EstateType.Commercial.ToString()},{commercialType},{((Commercial.Commercial)estate).Print()}";
+                    data = $"{EstateType.Commercial.ToString()},{commercialType},{((Commercial.Commercial)estate).GetDetails()}";
                     break;
 
                 case EstateType.Institutional:
                     InstitutionalType institutionalType = (InstitutionalType)cmbCategorySpecific3.SelectedIndex;
-                    data = $"{EstateType.Institutional.ToString()},{institutionalType},{((Institutional.Institutional)estate).Print()}";
+                    data = $"{EstateType.Institutional.ToString()},{institutionalType},{((Institutional.Institutional)estate).GetDetails()}";
                     break;
             }
             printData = estate.ToString() + data;
@@ -164,6 +164,7 @@ namespace Apu_Real_Estate__ARE_
             }
         }
 
+        // Creates a new estate object based on the selected type.
         private void CreateEstate()
         {
             estate = null;
@@ -181,7 +182,6 @@ namespace Apu_Real_Estate__ARE_
                     break;
             }
         }
-
         private void CreateInstitutionalType()
         {
             //get category data
@@ -191,6 +191,7 @@ namespace Apu_Real_Estate__ARE_
             //get object specified data
             LocationType locationType = (LocationType)cmbObjectSpecific1.SelectedIndex;
             string owner = txtObjectSpecific2.Text;
+            // Creates different estate objects based on the institutional type.
             switch (institutionalType)
             {
                 case InstitutionalType.Hospital:
@@ -213,6 +214,7 @@ namespace Apu_Real_Estate__ARE_
             //get object specified data
             Parking isAllowParking = (Parking)cmbObjectSpecific1.SelectedIndex;
             string orgNum = txtObjectSpecific2.Text;
+            // Creates different estate objects based on the commercial type.
             switch (commercialType)
             {
                 case CommercialType.Factory:
@@ -239,6 +241,7 @@ namespace Apu_Real_Estate__ARE_
             //get object specified data
             NotUsed notUsed = (NotUsed)cmbObjectSpecific1.SelectedIndex;
             int constructionYear = Int32.Parse(txtObjectSpecific2.Text);
+            // Creates different estate objects based on the residential type.
             switch (residentialType)
             {
                 case ResidentialType.Apartment:
@@ -252,6 +255,8 @@ namespace Apu_Real_Estate__ARE_
                     break;
             }
         }
+
+        // Creates a view for the selected estate type, showing relevant category and object-specific labels and controls.
         private void CreateCategoryObjectView()
         {
             EstateType estateType = (EstateType)cmbTypeEstate.SelectedIndex;
@@ -270,6 +275,7 @@ namespace Apu_Real_Estate__ARE_
             }
         }
 
+        // Creates a view for a residential estate, setting labels and controls for category and object-specific data.
         private void CreateResidentialView()
         {
             lblCategorySpecific1.Text = "No. of rooms";
@@ -282,6 +288,7 @@ namespace Apu_Real_Estate__ARE_
             lblObjectSpecific2.Text = "Year Construction";
         }
 
+        // Creates a view for a commercial estate, setting labels and controls for category and object-specific data.
         private void CreateCommercialView()
         {
             lblCategorySpecific1.Text = "No. of rooms";
@@ -294,6 +301,7 @@ namespace Apu_Real_Estate__ARE_
             lblObjectSpecific2.Text = "Organization number";
         }
 
+        // Creates a view for a institutional estate, setting labels and controls for category and object-specific data.
         public void CreateInstitutionalView()
         {
             lblCategorySpecific1.Text = "No. of rooms";
@@ -306,8 +314,10 @@ namespace Apu_Real_Estate__ARE_
             lblObjectSpecific2.Text = "Entity";
         }
 
+        // Fills data from a string array (partsData) into the form controls based on the estate type.
         private void FillDataToForm() 
         {
+            // Splits the input data into parts and removes prefixes based on the estate type.
             string[] partsData = printData.Split(",");
 
             for (int i = 0; i < partsData.Length; i++)
@@ -344,7 +354,7 @@ namespace Apu_Real_Estate__ARE_
                 }
             }
 
-
+            // fills data into the form controls for address, estate type, legal form, and specific details.
             cmbTypeEstate.SelectedItem = Enum.Parse(typeof(EstateType), partsData[6]);
             cmbLegalForm.SelectedItem = Enum.Parse(typeof(LegalForm), partsData[5]);
 
@@ -353,8 +363,7 @@ namespace Apu_Real_Estate__ARE_
             txtZipCode.Text = partsData[2];
             txtCity.Text = partsData[3];
             cmbCountry.SelectedItem = Enum.Parse(typeof(Countries), partsData[4]);
-
-           //fill in 
+            //fill in category and object
             txtCategory2.Text = partsData[8];
             txtCategory1.Text = partsData[9];
             txtObjectSpecific2.Text = partsData[11];
@@ -405,11 +414,13 @@ namespace Apu_Real_Estate__ARE_
             UpdateGUI();
         }
 
+        //change view of category and object group when estate type changed
         private void cmbTypeEstate_SelectedIndexChanged(object sender, EventArgs e)
         {
             CreateCategoryObjectView();
         }
 
+        // Updates the displayed estate item and fills form data.
         private void lstEstate_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Check if an item is selected
@@ -421,6 +432,7 @@ namespace Apu_Real_Estate__ARE_
             }
         }
 
+        // Removes the selected item from the listbox, remove picture and resets related data.
         private void btnDelete_Click(object sender, EventArgs e)
         {
             lstEstate.Items.RemoveAt(lstEstate.SelectedIndex);
@@ -430,6 +442,7 @@ namespace Apu_Real_Estate__ARE_
             ResetAllTextField();
         }
 
+        // Removes the selected item from the listbox, resets the label, and adds the updated estate.
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             lstEstate.Items.RemoveAt(lstEstate.SelectedIndex);

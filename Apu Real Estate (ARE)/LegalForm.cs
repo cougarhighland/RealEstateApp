@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Apu_Real_Estate__ARE_
 {
+    //legal form type
     public enum LegalForm
     {
         Ownership,
