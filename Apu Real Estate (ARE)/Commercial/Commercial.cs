@@ -14,6 +14,7 @@ namespace Apu_Real_Estate__ARE_.Commercial
         private string orgNr;
         private Parking isAllowParking;
         private int numRooms;
+        private CommercialType commercialType;
 
         //Properties
         public double Area
@@ -38,10 +39,21 @@ namespace Apu_Real_Estate__ARE_.Commercial
             set { numRooms = value; } 
         }
 
+        public CommercialType CommercialType
+        {
+            get { return commercialType; }
+            set { commercialType = value; }
+        }
+
         // Method to get a string representation of the commercial estate
         public string GetDetails()
         {
-            return $"Area {area.ToString()}m^2,Number of Room {numRooms.ToString()},Parking Allowance {isAllowParking},Organization number {orgNr}";
+            return $"Commercial,{CommercialType},Area {area.ToString()}m^2,Number of Room {numRooms.ToString()},Parking Allowance {isAllowParking},Organization number {orgNr}";
+        }
+        // Override ToString to combine base ToString with commercial details
+        public override string ToString()
+        {
+            return base.ToString() + GetDetails();
         }
     }
 }

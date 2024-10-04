@@ -62,6 +62,7 @@
             picBoxEstate = new PictureBox();
             btnUpdate = new Button();
             btnDelete = new Button();
+            btnDeleteAll = new Button();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -403,7 +404,7 @@
             // 
             btnDelete.BackColor = SystemColors.Window;
             btnDelete.ForeColor = Color.Red;
-            btnDelete.Location = new Point(599, 570);
+            btnDelete.Location = new Point(332, 570);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(188, 46);
             btnDelete.TabIndex = 12;
@@ -411,11 +412,24 @@
             btnDelete.UseVisualStyleBackColor = false;
             btnDelete.Click += btnDelete_Click;
             // 
+            // btnDeleteAll
+            // 
+            btnDeleteAll.BackColor = SystemColors.Window;
+            btnDeleteAll.ForeColor = Color.Black;
+            btnDeleteAll.Location = new Point(599, 570);
+            btnDeleteAll.Name = "btnDeleteAll";
+            btnDeleteAll.Size = new Size(188, 46);
+            btnDeleteAll.TabIndex = 13;
+            btnDeleteAll.Text = "Delete all";
+            btnDeleteAll.UseVisualStyleBackColor = false;
+            btnDeleteAll.Click += btnDeleteAll_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1347, 626);
+            Controls.Add(btnDeleteAll);
             Controls.Add(btnDelete);
             Controls.Add(btnUpdate);
             Controls.Add(picBoxEstate);
@@ -478,5 +492,6 @@
         private TextBox txtCategory2;
         private TextBox txtCategory1;
         private TextBox txtObjectSpecific2;
+        private Button btnDeleteAll;
     }
 }

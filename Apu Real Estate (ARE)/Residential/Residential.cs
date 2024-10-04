@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Apu_Real_Estate__ARE_.Institutional;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace Apu_Real_Estate__ARE_.Residential
         private int numOfFloors;
         private NotUsed notUsed;
         private int constructionYear;
-
+        private ResidentialType type;
         // Properties
         public int NumOfRooms
         {
@@ -43,10 +44,21 @@ namespace Apu_Real_Estate__ARE_.Residential
             get { return constructionYear; }
             set { constructionYear = value; }
         }
+        public ResidentialType ResidentialType
+        {
+            get { return type; }
+            set { type = value; }
+        }
         // Method to get a string representation of the Residential estate
         public string GetDetails()
         {
-            return $"Floor {numOfFloors.ToString()},Number of Room {numOfRooms.ToString()},isUsed {notUsed},constructionYear {constructionYear.ToString()}";
+            return $"Residential,{type},Floor {numOfFloors.ToString()},Number of Room {numOfRooms.ToString()},isUsed {notUsed},constructionYear {constructionYear.ToString()}";
+        }
+
+        // Override ToString to combine base ToString with Residential details
+        public override string ToString()
+        {
+            return base.ToString() + GetDetails();
         }
     }
 }
