@@ -63,6 +63,13 @@
             btnUpdate = new Button();
             btnDelete = new Button();
             btnDeleteAll = new Button();
+            menuStrip1 = new MenuStrip();
+            mNuFile = new ToolStripMenuItem();
+            mNuFileNew = new ToolStripMenuItem();
+            mNuFileOpen = new ToolStripMenuItem();
+            mNuFileSave = new ToolStripMenuItem();
+            mNuFileSaveAs = new ToolStripMenuItem();
+            mNuFileExit = new ToolStripMenuItem();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -70,6 +77,7 @@
             groupBox4.SuspendLayout();
             groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picBoxEstate).BeginInit();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox1
@@ -424,6 +432,54 @@
             btnDeleteAll.UseVisualStyleBackColor = false;
             btnDeleteAll.Click += btnDeleteAll_Click;
             // 
+            // menuStrip1
+            // 
+            menuStrip1.Items.AddRange(new ToolStripItem[] { mNuFile });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(1347, 24);
+            menuStrip1.TabIndex = 14;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // mNuFile
+            // 
+            mNuFile.DropDownItems.AddRange(new ToolStripItem[] { mNuFileNew, mNuFileOpen, mNuFileSave, mNuFileSaveAs, mNuFileExit });
+            mNuFile.Name = "mNuFile";
+            mNuFile.Size = new Size(37, 20);
+            mNuFile.Text = "File";
+            // 
+            // mNuFileNew
+            // 
+            mNuFileNew.Name = "mNuFileNew";
+            mNuFileNew.ShortcutKeys = Keys.Control | Keys.N;
+            mNuFileNew.Size = new Size(180, 22);
+            mNuFileNew.Text = "New";
+            // 
+            // mNuFileOpen
+            // 
+            mNuFileOpen.Name = "mNuFileOpen";
+            mNuFileOpen.Size = new Size(180, 22);
+            mNuFileOpen.Text = "Open";
+            // 
+            // mNuFileSave
+            // 
+            mNuFileSave.Name = "mNuFileSave";
+            mNuFileSave.Size = new Size(180, 22);
+            mNuFileSave.Text = "Save";
+            // 
+            // mNuFileSaveAs
+            // 
+            mNuFileSaveAs.Name = "mNuFileSaveAs";
+            mNuFileSaveAs.Size = new Size(180, 22);
+            mNuFileSaveAs.Text = "Save as";
+            // 
+            // mNuFileExit
+            // 
+            mNuFileExit.Name = "mNuFileExit";
+            mNuFileExit.ShortcutKeys = Keys.Alt | Keys.E;
+            mNuFileExit.Size = new Size(180, 22);
+            mNuFileExit.Text = "Exit";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -440,6 +496,8 @@
             Controls.Add(groupBox4);
             Controls.Add(groupBox1);
             Controls.Add(groupBox3);
+            Controls.Add(menuStrip1);
+            MainMenuStrip = menuStrip1;
             Name = "Form1";
             Text = "Form1";
             groupBox1.ResumeLayout(false);
@@ -453,7 +511,10 @@
             groupBox4.PerformLayout();
             groupBox6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picBoxEstate).EndInit();
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -493,5 +554,12 @@
         private TextBox txtCategory1;
         private TextBox txtObjectSpecific2;
         private Button btnDeleteAll;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem mNuFile;
+        private ToolStripMenuItem mNuFileNew;
+        private ToolStripMenuItem mNuFileOpen;
+        private ToolStripMenuItem mNuFileSave;
+        private ToolStripMenuItem mNuFileSaveAs;
+        private ToolStripMenuItem mNuFileExit;
     }
 }
