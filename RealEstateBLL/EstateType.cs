@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Apu_Real_Estate__ARE_
+namespace RealEstateBLL
+
 {
-    public class EstateManager : ListManager<Estate>
+    public enum EstateType
     {
-        public EstateManager() { }
+        Residential,
+        Commercial,
+        Institutional
     }
 }

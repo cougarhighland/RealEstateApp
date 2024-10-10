@@ -5,7 +5,8 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Apu_Real_Estate__ARE_
+namespace RealEstateBLL
+
 {
     public interface IEstate
     {

@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Apu_Real_Estate__ARE_.Residential
+namespace RealEstateBLL.Residential
 {
-    public class Villa : Residential
+    public class TownHouse:Residential
     {
         //constructors
-        public Villa() { }
-        public Villa(NotUsed isUsed, int constructionYear) 
+        public TownHouse() { }
+        public TownHouse(NotUsed isUsed, int constructionYear)
         {
             //set value of NotUsed and ConstructionYear by setters of Residential
             NotUsed = isUsed;

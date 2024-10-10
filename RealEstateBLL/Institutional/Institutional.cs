@@ -1,11 +1,11 @@
-﻿using Apu_Real_Estate__ARE_.Commercial;
+﻿using RealEstateBLL.Commercial;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Apu_Real_Estate__ARE_.Institutional
+namespace RealEstateBLL.Institutional
 {
     public abstract class Institutional: Estate
     {

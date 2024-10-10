@@ -1,11 +1,11 @@
-﻿using Apu_Real_Estate__ARE_.Institutional;
+﻿using RealEstateBLL.Institutional;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Apu_Real_Estate__ARE_.Residential
+namespace RealEstateBLL.Residential
 {
     public enum NotUsed
     {

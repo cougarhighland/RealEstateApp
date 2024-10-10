@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Apu_Real_Estate__ARE_.Commercial
+namespace RealEstateBLL.Commercial
 {
     public class Factories : Commercial
     {

@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Apu_Real_Estate__ARE_.Residential
+namespace RealEstateBLL
+
 {
-    public enum ResidentialType
+    //legal form type
+    public enum LegalForm
     {
-        Villa,
-        Apartment,
-        TownHouse
+        Ownership,
+        Tenement,
+        Rental
     }
 }

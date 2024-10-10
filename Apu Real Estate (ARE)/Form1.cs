@@ -1,6 +1,7 @@
-using Apu_Real_Estate__ARE_.Commercial;
-using Apu_Real_Estate__ARE_.Institutional;
-using Apu_Real_Estate__ARE_.Residential;
+using RealEstateBLL.Commercial;
+using RealEstateBLL.Institutional;
+using RealEstateBLL.Residential;
+using RealEstateBLL;
 using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Windows.Forms;
@@ -94,7 +95,7 @@ namespace Apu_Real_Estate__ARE_
         {
             try
             {
-                var residentialEstate = (Residential.Residential)estate;
+                var residentialEstate = (Residential)estate;
                 residentialEstate.NumOfFloors = numFloors;
                 residentialEstate.NumOfRooms = numRooms;
                 residentialEstate.ResidentialType = (ResidentialType)cmbCategorySpecific3.SelectedIndex;
@@ -111,7 +112,7 @@ namespace Apu_Real_Estate__ARE_
         {
             try
             {
-                var commercialEstate = (Commercial.Commercial)estate;
+                var commercialEstate = (Commercial)estate;
                 commercialEstate.Area = area;
                 commercialEstate.NumberOfRooms = numRooms;
                 commercialEstate.CommercialType = (CommercialType)cmbCategorySpecific3.SelectedIndex;
@@ -128,7 +129,7 @@ namespace Apu_Real_Estate__ARE_
         {
             try
             {
-                var institutionalEstate = (Institutional.Institutional)estate;
+                var institutionalEstate = (Institutional)estate;
                 institutionalEstate.NumberOfRooms = numRooms;
                 institutionalEstate.Area = area;
                 institutionalEstate.InstitutionalType = (InstitutionalType)cmbCategorySpecific3.SelectedIndex;

@@ -4,17 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Apu_Real_Estate__ARE_.Institutional
+namespace RealEstateBLL.Institutional
 {
-    public class Universities: Institutional
+    public class Hospitals : Institutional
     {
         //constructors
-        public Universities() { }
-        public Universities(LocationType lo, string owner)
+        public Hospitals() { }
+        public Hospitals(LocationType lo, string owner) 
         {
             //set value of locationType and entity by setters of Institutional
             LocationType = lo;
             Entity = owner;
         }
+
     }
 }

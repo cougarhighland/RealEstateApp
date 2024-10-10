@@ -5,7 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Apu_Real_Estate__ARE_.Commercial
+namespace RealEstateBLL.Commercial
 {
     public abstract class Commercial : Estate
     {

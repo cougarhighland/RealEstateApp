@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RealEstateDAL;
 
-namespace Apu_Real_Estate__ARE_
+namespace RealEstateBLL
 {
-    public enum EstateType
+    public class EstateManager : ListManager<Estate>
     {
-        Residential,
-        Commercial,
-        Institutional
+        public EstateManager() { }
     }
 }

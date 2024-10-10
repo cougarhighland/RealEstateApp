@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Apu_Real_Estate__ARE_
+namespace RealEstateDAL
 {
     ///<summary>
     /// Interface for implementation by manager classes hosting a collection
