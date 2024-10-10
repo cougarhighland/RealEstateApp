@@ -3,6 +3,8 @@ using Apu_Real_Estate__ARE_.Institutional;
 using Apu_Real_Estate__ARE_.Residential;
 using System.Diagnostics.Eventing.Reader;
 using System.IO;
+using System.Runtime.Serialization;
+using System.Text.Json;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -15,18 +17,16 @@ namespace Apu_Real_Estate__ARE_
         private Estate estate;
         private EstateManager estateManager = new EstateManager();
         private System.Drawing.Image placeholder;
+        private bool isSaved;
+        private FileType fileType;
+        private string fileName = "undefined";
 
         //create a file dilog
         private OpenFileDialog file = new OpenFileDialog();
         public Form1()
         {
             InitializeComponent();
-
-            //set comboboxes values
-            cmbCountry.DataSource = Enum.GetValues(typeof(Countries));
-            cmbLegalForm.DataSource = Enum.GetValues(typeof(LegalForm));
-            cmbTypeEstate.DataSource = Enum.GetValues(typeof(EstateType));
-            cmbCountry.SelectedIndex = (int)Countries.Sverige;
+            DefaultGUI();
 
             placeholder = picBoxEstate.Image;
         }
@@ -474,8 +474,8 @@ namespace Apu_Real_Estate__ARE_
             int endIndex = data.IndexOf(endCharacter);
             return data.Substring(startIndex, endIndex - startIndex);
         }
-
-        private void ResetAllTextField()
+        //reset GUI to init state
+        private void DefaultGUI()
         {
             lblEstateItem.ResetText();
             txtStreet.ResetText();
@@ -484,7 +484,28 @@ namespace Apu_Real_Estate__ARE_
             txtCategory1.ResetText();
             txtCategory2.ResetText();
             txtObjectSpecific2.ResetText();
+            //set comboboxes values
+            cmbCountry.DataSource = Enum.GetValues(typeof(Countries));
+            cmbLegalForm.DataSource = Enum.GetValues(typeof(LegalForm));
+            cmbTypeEstate.DataSource = Enum.GetValues(typeof(EstateType));
+            cmbCountry.SelectedIndex = (int)Countries.Sverige;
+            //set category and object to default value
+            CreateCategoryObjectView();
+            fileName = "undefined";
+            fileType = FileType.None;
         }
+
+        //clear estate
+        private void ClearAllEstateData()
+        {
+            lstEstate.Items.Clear();
+            estateManager.DeleteAll();
+            lblEstateItem.ResetText();
+            picBoxEstate.Image = null;
+            fileName = "undefined";
+            fileType = FileType.None;
+        }
+
         //add button event, create estate object, add to estate manager list, update gui and reset all text boxes
         private void btnAdd_Click(object sender, EventArgs e)
         {
@@ -492,7 +513,7 @@ namespace Apu_Real_Estate__ARE_
             //add estate to ListManager
             estateManager.Add(estate);
             UpdateGUI();
-            ResetAllTextField();
+            DefaultGUI();
         }
 
         //change view of category and object group when estate type changed
@@ -520,7 +541,7 @@ namespace Apu_Real_Estate__ARE_
             lstEstate.Items.RemoveAt(index);
             estateManager.DeleteAt(index);
             picBoxEstate.Image = null;
-            ResetAllTextField();
+            DefaultGUI();
         }
 
         //update estate event
@@ -532,16 +553,212 @@ namespace Apu_Real_Estate__ARE_
             estateManager.ChangeAt(estate, index);
             UpdateGUI();
             lblEstateItem.ResetText();
-            ResetAllTextField();
+            DefaultGUI();
         }
         // delete all
         private void btnDeleteAll_Click(object sender, EventArgs e)
         {
-            lstEstate.Items.Clear();
-            estateManager.DeleteAll();
-            lblEstateItem.ResetText();
-            picBoxEstate.Image = null;
-            ResetAllTextField();
+            ClearAllEstateData();
+            DefaultGUI();
+        }
+
+        //exit program when user click on file - exit
+        private void mNuFileExit_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void mNuFileNew_Click(object sender, EventArgs e)
+        {
+            // If the user presses New with unsaved changes
+            if (isSaved)
+            {
+                // If the user says no 
+                if (MessageBox.Show("You have unsaved changes. This action will discard your changes?", "Unsaved changes detected", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    DefaultGUI();
+                    ClearAllEstateData();
+                }
+            }
+            // If all changes are saved
+            else
+            {
+                DefaultGUI();
+                ClearAllEstateData();
+            }
+        }
+
+        private void mNuFileOpen_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem menuItem = (ToolStripMenuItem)sender;
+            string menuItemText = menuItem.Text;
+            using (OpenFileDialog dialog = new OpenFileDialog())
+            {
+                // The sender object keeps track of which menu option was clicked (under Open)
+                if (menuItemText == "JSON")
+                {
+                    dialog.Title = "Open JSON file";
+                    dialog.Filter = "JSON files|*.json";
+                    fileType = FileType.JSONFile;
+                }
+                // If the open text file option was clicked
+                else if (menuItemText == "Text File")
+                {
+                    dialog.Title = "Open text file";
+                    dialog.Filter = "Text files|*.txt";
+                    fileType = FileType.TextFile;
+                }
+
+                dialog.ShowDialog();
+                if (dialog.FileName.Trim() != "")
+                {
+                    if (menuItemText == "Text File")
+                    {
+                        try
+                        {
+                            estateManager.ReadTextFile(dialog.FileName);
+                            UpdateGUI();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show("Failed to read. Reason: " + error.Message, "Something went wrong!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else if (menuItemText == "JSON")
+                    {
+                        try
+                        {
+                            estateManager.JSONDeSerialize(dialog.FileName);
+                            UpdateGUI();
+                        }
+                        catch (JsonException ex)
+                        {
+                            // Handle the JsonException
+                            MessageBox.Show("Failed to deserialize. Reason: " + ex.Message, "Something went wrong!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        catch (Exception ex) // Catch any other unexpected exceptions
+                        {
+                            MessageBox.Show("An unexpected error occurred during deserialization: " + ex.Message, "Something went wrong!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    fileName = dialog.FileName;
+                }
+            }
+        }
+
+        private void mNuFileSave_Click(object sender, EventArgs e)
+        {
+            // this is a way to know if the user is working with an opened/saved file or not
+            if (fileType == FileType.None)
+            {
+                DialogResult result = MessageBox.Show(
+                 "Choose your file format for saving:\n" +
+                 "- JSON (structured data format)\n" +
+                 "- Text (plain text format)",
+                 "Save As...",
+                 MessageBoxButtons.YesNoCancel,
+                 MessageBoxIcon.Question);
+                // if the user selects yes (save as binary)
+                if (result == DialogResult.Yes)
+                {
+                    SaveToFile("JSON");
+                }
+                // if the user selects no (save as text)
+                else if (result == DialogResult.No)
+                {
+                    SaveToFile("Text File");
+                }
+            }
+            // if the file the user is currently trying to save is a binary file
+            else if (fileType == FileType.JSONFile)
+            {
+                estateManager.JSONSerialize(fileName);
+            }
+            // if the file the user is currently trying to save is a text file
+            else if (fileType == FileType.TextFile)
+            {
+                estateManager.WriteTextFile(fileName);
+            }
+        }
+
+        private void SaveToFile(string format)
+        {
+            using (SaveFileDialog dialog = new SaveFileDialog())
+            {
+                // The sender object keeps track of which menu option was clicked (under Open)
+                if (format == "JSON")
+                {
+                    dialog.Title = "Open JSON file";
+                    dialog.Filter = "JSON files|*.json";
+                    fileType = FileType.JSONFile;
+                }
+                // If the open text file option was clicked
+                else if (format == "Text File")
+                {
+                    dialog.Title = "Open text file";
+                    dialog.Filter = "Text files|*.txt";
+                    fileType = FileType.TextFile;
+                }
+
+                dialog.ShowDialog();
+                if (dialog.FileName.Trim() != "")
+                {
+                    if (format == "Text File")
+                    {
+                        try
+                        {
+                            estateManager.WriteTextFile(dialog.FileName);
+                            UpdateGUI();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show("Failed to save. Reason: " + error.Message, "Something went wrong!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else if (format == "JSON")
+                    {
+                        try
+                        {
+                            estateManager.JSONSerialize(dialog.FileName);
+                            UpdateGUI();
+                        }
+                        catch (JsonException ex)
+                        {
+                            // Handle the JsonException
+                            MessageBox.Show("Failed to serialize. Reason: " + ex.Message, "Something went wrong!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        catch (Exception ex) // Catch any other unexpected exceptions
+                        {
+                            MessageBox.Show("An unexpected error occurred during deserialization: " + ex.Message, "Something went wrong!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    isSaved = false;
+                    fileName = dialog.FileName;
+                }
+            }
+        }
+
+        private void mNuFileSaveAs_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem menuItem = (ToolStripMenuItem)sender;
+            string menuItemText = menuItem.Text;
+            // if there is nothing to save. Asks the user for confirmation
+            if (!isSaved)
+            {
+                // if the user still wants to save
+                if (MessageBox.Show("No changes have been made. Do you still wish to save?",
+                    "Nothing new to save",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    SaveToFile(menuItemText);
+                }
+            }
+            // if there are unsaved changes
+            else
+            {
+                SaveToFile(menuItemText);
+            }
         }
     }
 }

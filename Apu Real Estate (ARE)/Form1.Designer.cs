@@ -67,8 +67,12 @@
             mNuFile = new ToolStripMenuItem();
             mNuFileNew = new ToolStripMenuItem();
             mNuFileOpen = new ToolStripMenuItem();
+            jSONToolStripMenuItem = new ToolStripMenuItem();
+            textFileToolStripMenuItem = new ToolStripMenuItem();
             mNuFileSave = new ToolStripMenuItem();
             mNuFileSaveAs = new ToolStripMenuItem();
+            mNuSaveAsText = new ToolStripMenuItem();
+            mNuSaveAsJSON = new ToolStripMenuItem();
             mNuFileExit = new ToolStripMenuItem();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -454,24 +458,58 @@
             mNuFileNew.ShortcutKeys = Keys.Control | Keys.N;
             mNuFileNew.Size = new Size(180, 22);
             mNuFileNew.Text = "New";
+            mNuFileNew.Click += mNuFileNew_Click;
             // 
             // mNuFileOpen
             // 
+            mNuFileOpen.DropDownItems.AddRange(new ToolStripItem[] { jSONToolStripMenuItem, textFileToolStripMenuItem });
             mNuFileOpen.Name = "mNuFileOpen";
             mNuFileOpen.Size = new Size(180, 22);
             mNuFileOpen.Text = "Open";
+            mNuFileOpen.Click += mNuFileOpen_Click;
+            // 
+            // jSONToolStripMenuItem
+            // 
+            jSONToolStripMenuItem.Name = "jSONToolStripMenuItem";
+            jSONToolStripMenuItem.Size = new Size(116, 22);
+            jSONToolStripMenuItem.Text = "JSON";
+            jSONToolStripMenuItem.Click += mNuFileOpen_Click;
+            // 
+            // textFileToolStripMenuItem
+            // 
+            textFileToolStripMenuItem.Name = "textFileToolStripMenuItem";
+            textFileToolStripMenuItem.Size = new Size(116, 22);
+            textFileToolStripMenuItem.Text = "Text File";
+            textFileToolStripMenuItem.Click += mNuFileOpen_Click;
             // 
             // mNuFileSave
             // 
             mNuFileSave.Name = "mNuFileSave";
             mNuFileSave.Size = new Size(180, 22);
             mNuFileSave.Text = "Save";
+            mNuFileSave.Click += mNuFileSave_Click;
             // 
             // mNuFileSaveAs
             // 
+            mNuFileSaveAs.DropDownItems.AddRange(new ToolStripItem[] { mNuSaveAsText, mNuSaveAsJSON });
             mNuFileSaveAs.Name = "mNuFileSaveAs";
             mNuFileSaveAs.Size = new Size(180, 22);
             mNuFileSaveAs.Text = "Save as";
+            mNuFileSaveAs.Click += mNuFileSaveAs_Click;
+            // 
+            // mNuSaveAsText
+            // 
+            mNuSaveAsText.Name = "mNuSaveAsText";
+            mNuSaveAsText.Size = new Size(180, 22);
+            mNuSaveAsText.Text = "Text File";
+            mNuSaveAsText.Click += mNuFileSaveAs_Click;
+            // 
+            // mNuSaveAsJSON
+            // 
+            mNuSaveAsJSON.Name = "mNuSaveAsJSON";
+            mNuSaveAsJSON.Size = new Size(180, 22);
+            mNuSaveAsJSON.Text = "JSON";
+            mNuSaveAsJSON.Click += mNuFileSaveAs_Click;
             // 
             // mNuFileExit
             // 
@@ -479,6 +517,7 @@
             mNuFileExit.ShortcutKeys = Keys.Alt | Keys.E;
             mNuFileExit.Size = new Size(180, 22);
             mNuFileExit.Text = "Exit";
+            mNuFileExit.Click += mNuFileExit_Click;
             // 
             // Form1
             // 
@@ -558,8 +597,12 @@
         private ToolStripMenuItem mNuFile;
         private ToolStripMenuItem mNuFileNew;
         private ToolStripMenuItem mNuFileOpen;
-        private ToolStripMenuItem mNuFileSave;
         private ToolStripMenuItem mNuFileSaveAs;
         private ToolStripMenuItem mNuFileExit;
+        private ToolStripMenuItem mNuSaveAsText;
+        private ToolStripMenuItem mNuSaveAsJSON;
+        private ToolStripMenuItem mNuFileSave;
+        private ToolStripMenuItem jSONToolStripMenuItem;
+        private ToolStripMenuItem textFileToolStripMenuItem;
     }
 }

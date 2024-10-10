@@ -68,5 +68,16 @@ namespace Apu_Real_Estate__ARE_
         /// </summary>
         /// <returns>A list of strings containing the elements of the list.</returns>
         List<string> ToStringList();
+        ///<summary>
+        ///Serializes the objects in a manager class and writes them to a text file as JSon
+        ///</summary>
+        ///<param name="fileName">Path to where the text file should be saved</param>
+        void JSONSerialize(string fileName);
+
+        ///<summary>
+        ///DeSerializes the objects in a manager class and writes them to a text file as JSON
+        ///</summary>
+        ///<param name="fileName">Path to text file you want to deserialize</param>
+        void JSONDeSerialize(string fileName);
     }
 }
