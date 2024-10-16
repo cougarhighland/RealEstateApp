@@ -462,18 +462,19 @@ namespace Apu_Real_Estate__ARE_
                     break;
             }
         }
-
+        //remove comma
         private string RemovePrefix(string data, string prefix)
         {
             return data.StartsWith(prefix) ? data.Replace(prefix, "") : data;
         }
-
+        //get area value
         private string ExtractAreaValue(string data, string endCharacter)
         {
             int startIndex = data.IndexOf(' ') + 1;
             int endIndex = data.IndexOf(endCharacter);
             return data.Substring(startIndex, endIndex - startIndex);
         }
+
         //reset GUI to init state
         private void DefaultGUI()
         {

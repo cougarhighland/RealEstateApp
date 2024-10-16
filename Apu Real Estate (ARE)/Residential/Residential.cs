@@ -17,8 +17,6 @@ namespace Apu_Real_Estate__ARE_.Residential
         // fields
         private int numOfRooms;
         private int numOfFloors;
-        private NotUsed notUsed;
-        private int constructionYear;
         private ResidentialType type;
         // Properties
         public int NumOfRooms
@@ -33,27 +31,13 @@ namespace Apu_Real_Estate__ARE_.Residential
             set { numOfFloors = value; }
         }
 
-        public NotUsed NotUsed
-        {
-            get { return notUsed; }
-            set { notUsed = value; }
-        }
-
-        public int ConstructionYear
-        {
-            get { return constructionYear; }
-            set { constructionYear = value; }
-        }
         public ResidentialType ResidentialType
         {
             get { return type; }
             set { type = value; }
         }
         // Method to get a string representation of the Residential estate
-        public string GetDetails()
-        {
-            return $"Residential,{type},Floor {numOfFloors.ToString()},Number of Room {numOfRooms.ToString()},isUsed {notUsed},constructionYear {constructionYear.ToString()}";
-        }
+        public abstract override string GetDetails();
 
         // Override ToString to combine base ToString with Residential details
         public override string ToString()
