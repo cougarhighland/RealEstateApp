@@ -45,5 +45,7 @@ namespace Apu_Real_Estate__ARE_
         {
             return $"ID {ID},Address {address.ToString()},Legal Form {legalForm},";
         }
+
+        public abstract string GetDetails();
     }
 }

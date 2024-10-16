@@ -17,5 +17,6 @@ namespace Apu_Real_Estate__ARE_
 
         LegalForm LegalForm { get; set; }
 
+        public abstract string ToString();
     }
 }
