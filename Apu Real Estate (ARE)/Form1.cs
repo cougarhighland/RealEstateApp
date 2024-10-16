@@ -62,21 +62,18 @@ namespace Apu_Real_Estate__ARE_
             switch (estateType)
             {
                 case EstateType.Residential:
-                    ResidentialType residentialType = (ResidentialType)cmbCategorySpecific3.SelectedIndex;
-                    data = $"{EstateType.Residential.ToString()},{residentialType},{((Residential.Residential)estate).GetDetails()}";
+                    data = ((Residential.Residential)estate).ToString();
                     break;
 
                 case EstateType.Commercial:
-                    CommercialType commercialType = (CommercialType)cmbCategorySpecific3.SelectedIndex;
-                    data = $"{EstateType.Commercial.ToString()},{commercialType},{((Commercial.Commercial)estate).GetDetails()}";
+                    data = ((Commercial.Commercial)estate).ToString();
                     break;
 
                 case EstateType.Institutional:
-                    InstitutionalType institutionalType = (InstitutionalType)cmbCategorySpecific3.SelectedIndex;
-                    data = $"{EstateType.Institutional.ToString()},{institutionalType},{((Institutional.Institutional)estate).GetDetails()}";
+                    data = ((Institutional.Institutional)estate).ToString();
                     break;
             }
-            printData = estate.ToString() + data;
+            printData = data;
             return printData;
         }
 
@@ -141,7 +138,7 @@ namespace Apu_Real_Estate__ARE_
                     estate.ID = idIndex;
                     idIndex++;
                 }
-                else 
+                else
                 {
                     estate.ID = idIndex;
                 }
@@ -315,7 +312,7 @@ namespace Apu_Real_Estate__ARE_
         }
 
         // Fills data from a string array (partsData) into the form controls based on the estate type.
-        private void FillDataToForm() 
+        private void FillDataToForm()
         {
             // Splits the input data into parts and removes prefixes based on the estate type.
             string[] partsData = printData.Split(",");
@@ -369,10 +366,10 @@ namespace Apu_Real_Estate__ARE_
             txtObjectSpecific2.Text = partsData[11];
 
             EstateType estatetype = (EstateType)cmbTypeEstate.SelectedIndex;
-            switch (estatetype) 
+            switch (estatetype)
             {
                 case EstateType.Residential:
-                    cmbCategorySpecific3.SelectedItem = Enum.Parse(typeof(ResidentialType), partsData[7]); 
+                    cmbCategorySpecific3.SelectedItem = Enum.Parse(typeof(ResidentialType), partsData[7]);
                     cmbObjectSpecific1.SelectedItem = Enum.Parse(typeof(NotUsed), partsData[10]);
                     break;
                 case EstateType.Commercial:

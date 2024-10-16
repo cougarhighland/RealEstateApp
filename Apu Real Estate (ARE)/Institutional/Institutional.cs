@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Apu_Real_Estate__ARE_.Commercial;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,24 +10,16 @@ namespace Apu_Real_Estate__ARE_.Institutional
     public abstract class Institutional: Estate
     {
         //Fields
-        private string entity;
-        private LocationType locationType;
         private int numRooms;
         private double area;
-
+        private InstitutionalType institutionalType;
         //Properties
-        public string Entity
+        public InstitutionalType InstitutionalType
         {
-            get { return entity; }
-            set { entity = value; }
+            get { return institutionalType; }
+            set { institutionalType = value; }
         }
-
-        public LocationType LocationType
-        {
-            get { return locationType; }
-            set { locationType = value; }
-        }
-
+  
         public int NumberOfRooms
         {
             get { return numRooms; }
@@ -38,10 +31,14 @@ namespace Apu_Real_Estate__ARE_.Institutional
             get { return area; }
             set { area = value; }
         }
+ 
         // Method to get a string representation of the institutional estate
-        public string GetDetails()
+        public abstract override string GetDetails();
+ 
+        // Override ToString to combine base ToString with institutional details
+        public override string ToString()
         {
-            return $"Area {area.ToString()}m^2,Number of Room {numRooms.ToString()},locationType {locationType},owner {entity}";
+            return base.ToString() + GetDetails();
         }
     }
 }
