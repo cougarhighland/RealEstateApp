@@ -85,5 +85,24 @@ namespace Apu_Real_Estate__ARE_
             return infoStringList;
         }
 
+        public void JSONSerialize(string fileName)
+        {
+            JSONFileHandler.WriteToFileAsJSON(fileName, m_List);
+        }
+
+        public void JSONDeSerialize(string fileName)
+        {
+            m_List = JSONFileHandler.ReadJSONFile<List<T>>(fileName);
+        }
+
+        public void WriteTextFile(string fileName)
+        {
+            TextFileHandler.WriteToFile(fileName, m_List);
+        }
+
+        public void ReadTextFile(string fileName)
+        {
+            m_List = TextFileHandler.ReadFromFile<T>(fileName);
+        }
     }
 }
