@@ -6,6 +6,7 @@ using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using UtilitiesLib;
 
 namespace Apu_Real_Estate__ARE_
 {
@@ -16,6 +17,7 @@ namespace Apu_Real_Estate__ARE_
         private Estate estate;
         private EstateManager estateManager = new EstateManager();
         private System.Drawing.Image placeholder;
+        private bool isError = false;
 
         //create a file dilog
         private OpenFileDialog file = new OpenFileDialog();
@@ -56,15 +58,46 @@ namespace Apu_Real_Estate__ARE_
                 EstateType category = (EstateType)cmbTypeEstate.SelectedIndex;
 
                 // Validate and parse numRooms, default to 1 if invalid
-                int numRooms = int.TryParse(txtCategory1.Text, out int parsedRooms) ? parsedRooms : 1;
-                double area = double.TryParse(txtCategory2.Text, out double parsedArea) ? parsedArea : 1;
+                //int numRooms = int.TryParse(txtCategory1.Text, out int parsedRooms) ? parsedRooms : 1;
+                //double area = double.TryParse(txtCategory2.Text, out double parsedArea) ? parsedArea : 1;
+
+                int numRooms;
+                if(StringConverter.StringToInt(txtCategory1.Text, out numRooms, 1, 1000))
+                {
+                    // Conversion successful
+                    isError = false;
+                }
+                else
+                {
+                    MessageBox.Show("Please enter a valid number for the number of rooms in integer.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    isError = true;
+                }
+                double area;
+                if (StringConverter.StringToDecimal(txtCategory2.Text, out area, 1, 1000))
+                {
+                    // Conversion successful
+                    isError = false;
+                }
+                else
+                {
+                    MessageBox.Show("Please enter a valid number for the number of rooms in decimal.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    isError = true;
+                }
 
                 // Validate and parse numFloors or area based on the estate type
                 switch (category)
                 {
                     case EstateType.Residential:
-                        int numFloors = int.TryParse(txtCategory2.Text, out int parsedFloors) ? parsedFloors : 1;
-                        AssignResidentialData(numRooms, numFloors);
+                        //int numFloors = int.TryParse(txtCategory2.Text, out int parsedFloors) ? parsedFloors : 1;
+                        int numFloors;
+                        if (StringConverter.StringToInt(txtCategory2.Text, out numFloors))
+                        {
+                            AssignResidentialData(numRooms, numFloors);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Please enter a valid number for the number of Floors in integer.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                         break;
 
                     case EstateType.Commercial:
@@ -102,7 +135,7 @@ namespace Apu_Real_Estate__ARE_
             }
             catch (Exception ex)
             {
-                // Handle the exception appropriately, e.g., log it or display an error message
+                // Handle the exception 
                 MessageBox.Show("Error setting residential data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -119,7 +152,7 @@ namespace Apu_Real_Estate__ARE_
             }
             catch (Exception ex)
             {
-                // Handle the exception appropriately, e.g., log it or display an error message
+                // Handle the exception
                 MessageBox.Show("Error setting Commercial data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -136,7 +169,7 @@ namespace Apu_Real_Estate__ARE_
             }
             catch (Exception ex)
             {
-                // Handle the exception appropriately, e.g., log it or display an error message
+                // Handle the exception
                 MessageBox.Show("Error setting Institutional data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -204,23 +237,28 @@ namespace Apu_Real_Estate__ARE_
         {
             // Get category data
             int numRooms;
-            if (!int.TryParse(txtCategory1.Text, out numRooms))
+            if (StringConverter.StringToInt(txtCategory1.Text, out numRooms, 1, 1000))
             {
-                throw new ArgumentException("Invalid input: Please enter a valid number for number of rooms.");
+                // Conversion successful
+                isError = false;
             }
-            if (numRooms <= 0)
+            else
             {
-                throw new ArgumentException("Number must be positive.");
+                MessageBox.Show("Please enter a valid number for the number of rooms in integer.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                isError = true;
             }
             double area;
-            if (!double.TryParse(txtCategory2.Text, out area))
+            if (StringConverter.StringToDecimal(txtCategory2.Text, out area, 1, 1000))
             {
-                throw new ArgumentException("Invalid input: Please enter a valid number for area.");
+                // Conversion successful
+                isError = false;
             }
-            if (area <= 0)
+            else
             {
-                throw new ArgumentException("Number must be positive.");
+                MessageBox.Show("Please enter a valid number for thearea in decimal.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                isError = true;
             }
+
             InstitutionalType institutionalType = (InstitutionalType)cmbCategorySpecific3.SelectedIndex;
 
             // Get object specified data
@@ -245,25 +283,28 @@ namespace Apu_Real_Estate__ARE_
         }
         private void CreateCommercialType()
         {
-
             // Get category data
             int numRooms;
-            if (!int.TryParse(txtCategory1.Text, out numRooms))
+            if (StringConverter.StringToInt(txtCategory1.Text, out numRooms, 1, 1000))
             {
-                throw new ArgumentException("Invalid input: enter a valid number for number of rooms.");
+                // Conversion successful
+                isError = false;
             }
-            if (numRooms <= 0)
+            else
             {
-                throw new ArgumentException("Number must be positive.");
+                MessageBox.Show("Please enter a valid number for the number of rooms in integer.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                isError = true;
             }
             double area;
-            if (!double.TryParse(txtCategory2.Text, out area))
+            if (StringConverter.StringToDecimal(txtCategory2.Text, out area, 1, 1000))
             {
-                throw new ArgumentException("Invalid input: enter a valid number for area.");
+                // Conversion successful
+                isError = false;
             }
-            if (area <= 0)
+            else
             {
-                throw new ArgumentException("Number must be positive.");
+                MessageBox.Show("Please enter a valid number for the area in decimal.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                isError = true;
             }
 
             CommercialType commercialType = (CommercialType)cmbCategorySpecific3.SelectedIndex;
@@ -290,7 +331,6 @@ namespace Apu_Real_Estate__ARE_
                 default:
                     throw new InvalidOperationException("Invalid commercial type.");
             }
-
         }
 
         private void CreateResidentialType()
@@ -298,18 +338,45 @@ namespace Apu_Real_Estate__ARE_
             try
             {
                 // Get category data
-                int numRooms = Int32.Parse(txtCategory1.Text);
-                int numFloors = Int32.Parse(txtCategory2.Text);
+                //int numRooms = Int32.Parse(txtCategory1.Text);
+                //int numFloors = Int32.Parse(txtCategory2.Text);
+                int numRooms;
+                int numFloors;
+                if (StringConverter.StringToInt(txtCategory1.Text, out numRooms, 1, 1000))
+                {
+                    // Conversion successful
+                    isError = false;
+                }
+                else
+                {
+                    MessageBox.Show("Please enter a valid number for the number of rooms in integer.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    isError = true;
+                }
+                if (StringConverter.StringToInt(txtCategory2.Text, out numFloors, 1, 1000))
+                {
+                    // Conversion successful
+                    isError = false;
+                }
+                else
+                {
+                    MessageBox.Show("Please enter a valid number for the number of floors in integer.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    isError = true;
+                }
                 ResidentialType residentialType = (ResidentialType)cmbCategorySpecific3.SelectedIndex;
 
                 // Get object specified data
                 NotUsed notUsed = (NotUsed)cmbObjectSpecific1.SelectedIndex;
-                int constructionYear = Int32.Parse(txtObjectSpecific2.Text);
-
-                // Validate input data
-                if (numRooms <= 0 || numFloors <= 0 || constructionYear <= 0)
+                //int constructionYear = Int32.Parse(txtObjectSpecific2.Text);
+                int constructionYear;
+                if (StringConverter.StringToInt(txtObjectSpecific2.Text, out constructionYear, 1, 1000))
                 {
-                    throw new ArgumentException("Invalid input: must be positive.");
+                    // Conversion successful
+                    isError = false;
+                }
+                else
+                {
+                    MessageBox.Show("Please enter a valid number for the construction Year in integer.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    isError = true;
                 }
 
                 // Creates different estate objects based on the residential type.
@@ -490,10 +557,13 @@ namespace Apu_Real_Estate__ARE_
         private void btnAdd_Click(object sender, EventArgs e)
         {
             AddEstate(false);
-            //add estate to ListManager
-            estateManager.Add(estate);
-            UpdateGUI();
-            ResetAllTextField();
+            //add estate to ListManager if there is no input error
+            if (isError == false)
+             {   
+                estateManager.Add(estate);
+                UpdateGUI();
+                ResetAllTextField();
+            }
         }
 
         //change view of category and object group when estate type changed
