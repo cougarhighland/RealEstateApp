@@ -7,26 +7,17 @@ using System.Threading.Tasks;
 
 namespace RealEstateBLL.Institutional
 {
-    public abstract class Institutional: Estate
+    public abstract class Institutional : Estate
     {
         //Fields
-        private string entity;
-        private LocationType locationType;
         private int numRooms;
         private double area;
-        private InstitutionalType type;
-
+        private InstitutionalType institutionalType;
         //Properties
-        public string Entity
+        public InstitutionalType InstitutionalType
         {
-            get { return entity; }
-            set { entity = value; }
-        }
-
-        public LocationType LocationType
-        {
-            get { return locationType; }
-            set { locationType = value; }
+            get { return institutionalType; }
+            set { institutionalType = value; }
         }
 
         public int NumberOfRooms
@@ -40,16 +31,10 @@ namespace RealEstateBLL.Institutional
             get { return area; }
             set { area = value; }
         }
-        public InstitutionalType InstitutionalType
-        {
-            get { return type; }
-            set { type = value; }
-        }
+
         // Method to get a string representation of the institutional estate
-        public string GetDetails()
-        {
-            return $"Institutional,{type},Area {area.ToString()}m^2,Number of Room {numRooms.ToString()},locationType {locationType},owner {entity}";
-        }
+        public abstract override string GetDetails();
+
         // Override ToString to combine base ToString with institutional details
         public override string ToString()
         {

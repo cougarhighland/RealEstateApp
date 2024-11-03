@@ -368,7 +368,7 @@ namespace Apu_Real_Estate__ARE_
                 NotUsed notUsed = (NotUsed)cmbObjectSpecific1.SelectedIndex;
                 //int constructionYear = Int32.Parse(txtObjectSpecific2.Text);
                 int constructionYear;
-                if (StringConverter.StringToInt(txtObjectSpecific2.Text, out constructionYear, 1, 1000))
+                if (StringConverter.StringToInt(txtObjectSpecific2.Text, out constructionYear, 1, 2024))
                 {
                     // Conversion successful
                     isError = false;

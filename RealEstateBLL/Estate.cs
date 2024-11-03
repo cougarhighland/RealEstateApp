@@ -17,8 +17,8 @@ namespace RealEstateBLL
         private string imagePath;
         private LegalForm legalForm;
         //properties
-        public int ID 
-        { 
+        public int ID
+        {
             get { return id; }
             set { id = value; }
         }
@@ -36,7 +36,7 @@ namespace RealEstateBLL
         }
 
         public LegalForm LegalForm
-        { 
+        {
             get { return legalForm; }
             set { legalForm = value; }
         }
@@ -46,5 +46,7 @@ namespace RealEstateBLL
         {
             return $"ID {ID},Address {address.ToString()},Legal Form {legalForm},";
         }
+
+        public abstract string GetDetails();
     }
 }

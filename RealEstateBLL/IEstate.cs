@@ -18,5 +18,7 @@ namespace RealEstateBLL
 
         LegalForm LegalForm { get; set; }
 
+        public abstract string ToString();
+
     }
 }

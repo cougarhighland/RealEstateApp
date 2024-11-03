@@ -6,15 +6,35 @@ using System.Threading.Tasks;
 
 namespace RealEstateBLL.Residential
 {
-    public class TownHouse:Residential
+    public class TownHouse : Residential
     {
+        //fields
+        private NotUsed notUsed;
+        private int constructionYear;
+        //properties
+        public NotUsed NotUsed
+        {
+            get { return notUsed; }
+            set { notUsed = value; }
+        }
+
+        public int ConstructionYear
+        {
+            get { return constructionYear; }
+            set { constructionYear = value; }
+        }
         //constructors
         public TownHouse() { }
-        public TownHouse(NotUsed isUsed, int constructionYear)
+        public TownHouse(NotUsed isUsed, int construction)
         {
             //set value of NotUsed and ConstructionYear by setters of Residential
             NotUsed = isUsed;
-            ConstructionYear = constructionYear;
+            ConstructionYear = construction;
+        }
+        //get details of residential estate
+        public override string GetDetails()
+        {
+            return $"Residential,{ResidentialType},Floor {NumOfFloors.ToString()},Number of Room {NumOfRooms.ToString()},isUsed {notUsed},constructionYear {constructionYear.ToString()}";
         }
     }
 }

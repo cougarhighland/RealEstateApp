@@ -46,10 +46,8 @@ namespace RealEstateBLL.Commercial
         }
 
         // Method to get a string representation of the commercial estate
-        public string GetDetails()
-        {
-            return $"Commercial,{CommercialType},Area {area.ToString()}m^2,Number of Room {numRooms.ToString()},Parking Allowance {isAllowParking},Organization number {orgNr}";
-        }
+        public abstract override string GetDetails();
+
         // Override ToString to combine base ToString with commercial details
         public override string ToString()
         {

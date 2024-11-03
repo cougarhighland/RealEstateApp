@@ -6,15 +6,36 @@ using System.Threading.Tasks;
 
 namespace RealEstateBLL.Institutional
 {
-    public class Schools: Institutional
+    public class Schools : Institutional
     {
+        //fields
+        private string entity;
+        private LocationType locationType;
+
+        //properties
+        public LocationType LocationType
+        {
+            get { return locationType; }
+            set { locationType = value; }
+        }
+
+        public string Entity
+        {
+            get { return entity; }
+            set { entity = value; }
+        }
         //constructors
         public Schools() { }
         public Schools(LocationType lo, string owner)
         {
-            //set value of locationType and entity by setters of Institutional
+            //set value of locationType and entity
             LocationType = lo;
             Entity = owner;
+        }
+
+        public override string GetDetails()
+        {
+            return $"Institutional,{InstitutionalType},Area {Area.ToString()}m^2,Number of Room {NumberOfRooms.ToString()},locationType {LocationType},owner {entity}";
         }
     }
 }

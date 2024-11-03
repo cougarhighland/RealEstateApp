@@ -6,8 +6,23 @@ using System.Threading.Tasks;
 
 namespace RealEstateBLL.Residential
 {
-    public class Apartment: Residential
+    public class Apartment : Residential
     {
+        //fields
+        private NotUsed notUsed;
+        private int constructionYear;
+        //properties
+        public NotUsed NotUsed
+        {
+            get { return notUsed; }
+            set { notUsed = value; }
+        }
+
+        public int ConstructionYear
+        {
+            get { return constructionYear; }
+            set { constructionYear = value; }
+        }
         //constructors
         public Apartment() { }
         public Apartment(NotUsed isUsed, int construction)
@@ -15,6 +30,11 @@ namespace RealEstateBLL.Residential
             //set value of NotUsed and ConstructionYear by setters of Residential
             NotUsed = isUsed;
             ConstructionYear = construction;
+        }
+        //get details of residential estate
+        public override string GetDetails()
+        {
+            return $"Residential,{ResidentialType},Floor {NumOfFloors.ToString()},Number of Room {NumOfRooms.ToString()},isUsed {notUsed},constructionYear {constructionYear.ToString()}";
         }
     }
 }
