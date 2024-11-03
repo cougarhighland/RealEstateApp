@@ -9,7 +9,7 @@ using System.Xml.Linq;
 namespace RealEstateBLL
 
 {
-    public abstract class Estate : IEstate
+    public class Estate : IEstate
     {
         //fields
         private int id;
@@ -47,6 +47,6 @@ namespace RealEstateBLL
             return $"ID {ID},Address {address.ToString()},Legal Form {legalForm},";
         }
 
-        public abstract string GetDetails();
+        public virtual string GetDetails() { return ""; }
     }
 }
