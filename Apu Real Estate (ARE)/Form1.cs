@@ -15,7 +15,8 @@ namespace Apu_Real_Estate__ARE_
         //fields
         public int idIndex = 10;
         private Estate estate;
-        private EstateManager estateManager = new EstateManager();
+        //private EstateManager estateManager = new EstateManager();
+        private EstateDBManager estateDB = new EstateDBManager();
         private System.Drawing.Image placeholder;
         private bool isError = false;
 
@@ -47,7 +48,7 @@ namespace Apu_Real_Estate__ARE_
         {
             //clear the list
             lstEstate.Items.Clear();
-            lstEstate.Items.AddRange(estateManager.ToStringArray());
+            //lstEstate.Items.AddRange(estateManager.ToStringArray());
         }
 
         //read category data from the form
@@ -212,6 +213,7 @@ namespace Apu_Real_Estate__ARE_
                 estate.ImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Resources\Asg1.jpg");
                 picBoxEstate.Image = Image.FromFile(estate.ImagePath);
 
+                estateDB.AddEstate(estate);
             }
         }
 
@@ -559,8 +561,8 @@ namespace Apu_Real_Estate__ARE_
             AddEstate(false);
             //add estate to ListManager if there is no input error
             if (isError == false)
-             {   
-                estateManager.Add(estate);
+             {
+                //estateManager.Add(estate);
                 UpdateGUI();
                 ResetAllTextField();
             }
@@ -589,7 +591,8 @@ namespace Apu_Real_Estate__ARE_
         {
             int index = lstEstate.SelectedIndex;
             lstEstate.Items.RemoveAt(index);
-            estateManager.DeleteAt(index);
+            //estateManager.DeleteAt(index);
+            estateDB.DeleteEstate(index);
             picBoxEstate.Image = null;
             ResetAllTextField();
         }
@@ -600,7 +603,7 @@ namespace Apu_Real_Estate__ARE_
             int index = lstEstate.SelectedIndex;
             AddEstate(true);
             //change estate in ListManager
-            estateManager.ChangeAt(estate, index);
+            //estateManager.ChangeAt(estate, index);
             UpdateGUI();
             lblEstateItem.ResetText();
             ResetAllTextField();
@@ -609,7 +612,7 @@ namespace Apu_Real_Estate__ARE_
         private void btnDeleteAll_Click(object sender, EventArgs e)
         {
             lstEstate.Items.Clear();
-            estateManager.DeleteAll();
+            //estateManager.DeleteAll();
             lblEstateItem.ResetText();
             picBoxEstate.Image = null;
             ResetAllTextField();

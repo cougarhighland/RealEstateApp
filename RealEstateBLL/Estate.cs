@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -12,6 +14,7 @@ namespace RealEstateBLL
     public class Estate : IEstate
     {
         //fields
+    
         private int id;
         private Address address;
         private string imagePath;
@@ -22,7 +25,6 @@ namespace RealEstateBLL
             get { return id; }
             set { id = value; }
         }
-
         public Address Address
         {
             get { return address; }

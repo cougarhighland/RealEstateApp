@@ -17,7 +17,8 @@ namespace RealEstateDLL
         {
             // Set up primary key for Estate
             modelBuilder.Entity<Estate>()
-                .HasKey(e => e.ID);
+                .Property(e => e.ID)
+                .ValueGeneratedOnAdd();
 
             // Configure one-to-one relationship between Estate and Address
             modelBuilder.Entity<Estate>()
