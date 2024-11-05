@@ -14,7 +14,7 @@ namespace RealEstateDLL.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; } 
-        public string Category { get; set; }
+        public EstateType Category { get; set; }
 
         // Foreign key for Address
         public int AddressId { get; set; }

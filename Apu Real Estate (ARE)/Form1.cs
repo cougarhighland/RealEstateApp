@@ -13,12 +13,13 @@ namespace Apu_Real_Estate__ARE_
     public partial class Form1 : Form
     {
         //fields
-        public int idIndex = 10;
         private Estate estate;
         //private EstateManager estateManager = new EstateManager();
         private EstateDBManager estateDB = new EstateDBManager();
+        private int idIndex;
         private System.Drawing.Image placeholder;
         private bool isError = false;
+        private int selectedEstateID;
 
         //create a file dilog
         private OpenFileDialog file = new OpenFileDialog();
@@ -33,6 +34,8 @@ namespace Apu_Real_Estate__ARE_
             cmbCountry.SelectedIndex = (int)Countries.Sverige;
 
             placeholder = picBoxEstate.Image;
+            idIndex = estateDB.GetID() + 1;
+            UpdateGUI();
         }
 
         // Add data from the form to estate
@@ -49,6 +52,11 @@ namespace Apu_Real_Estate__ARE_
             //clear the list
             lstEstate.Items.Clear();
             //lstEstate.Items.AddRange(estateManager.ToStringArray());
+            var estates = estateDB.GetAllEstates();
+            foreach (Estate estate in estates)
+            {
+                lstEstate.Items.Add(estate);
+            }
         }
 
         //read category data from the form
@@ -58,60 +66,74 @@ namespace Apu_Real_Estate__ARE_
             {
                 EstateType category = (EstateType)cmbTypeEstate.SelectedIndex;
 
-                // Validate and parse numRooms, default to 1 if invalid
-                //int numRooms = int.TryParse(txtCategory1.Text, out int parsedRooms) ? parsedRooms : 1;
-                //double area = double.TryParse(txtCategory2.Text, out double parsedArea) ? parsedArea : 1;
+                int numRooms = 0;
+                double area = 0;
+                bool isError = false;
 
-                int numRooms;
-                if(StringConverter.StringToInt(txtCategory1.Text, out numRooms, 1, 1000))
+                // Check and parse numRooms only if txtCategory1 is not empty
+                if (!string.IsNullOrWhiteSpace(txtCategory1.Text))
                 {
-                    // Conversion successful
-                    isError = false;
+                    if (StringConverter.StringToInt(txtCategory1.Text, out numRooms, 1, 1000))
+                    {
+                        isError = false;
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please enter a valid number for the number of rooms in integer.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        isError = true;
+                        return; // Stop further processing if input is invalid
+                    }
                 }
-                else
+
+                // Check and parse area only if txtCategory2 is not empty
+                if (!string.IsNullOrWhiteSpace(txtCategory2.Text))
                 {
-                    MessageBox.Show("Please enter a valid number for the number of rooms in integer.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    isError = true;
-                }
-                double area;
-                if (StringConverter.StringToDecimal(txtCategory2.Text, out area, 1, 1000))
-                {
-                    // Conversion successful
-                    isError = false;
-                }
-                else
-                {
-                    MessageBox.Show("Please enter a valid number for the number of rooms in decimal.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    isError = true;
+                    if (StringConverter.StringToDecimal(txtCategory2.Text, out area, 1, 1000))
+                    {
+                        isError = false;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please enter a valid number for the area in decimal.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        isError = true;
+                        return; // Stop further processing if input is invalid
+                    }
                 }
 
                 // Validate and parse numFloors or area based on the estate type
                 switch (category)
                 {
+
                     case EstateType.Residential:
-                        //int numFloors = int.TryParse(txtCategory2.Text, out int parsedFloors) ? parsedFloors : 1;
-                        int numFloors;
-                        if (StringConverter.StringToInt(txtCategory2.Text, out numFloors))
+                        if (!string.IsNullOrWhiteSpace(txtCategory2.Text) && StringConverter.StringToInt(txtCategory2.Text, out int numFloors))
                         {
+
                             AssignResidentialData(numRooms, numFloors);
                         }
-                        else
-                        {
-                            MessageBox.Show("Please enter a valid number for the number of Floors in integer.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
+
                         break;
 
                     case EstateType.Commercial:
-                        AssignCommercialData(numRooms, area);
+                        if (!string.IsNullOrWhiteSpace(txtCategory1.Text) || !string.IsNullOrWhiteSpace(txtCategory2.Text))
+
+                        {
+                            AssignCommercialData(numRooms, area);
+                        }
                         break;
 
                     case EstateType.Institutional:
-                        AssignInstitutionalData(numRooms, area);
+                        if (!string.IsNullOrWhiteSpace(txtCategory1.Text) || !string.IsNullOrWhiteSpace(txtCategory2.Text))
+
+                        {
+                            AssignInstitutionalData(numRooms, area);
+                        }
                         break;
 
                     default:
                         throw new InvalidOperationException("Invalid estate type selected.");
                 }
+
             }
             catch (FormatException ex)
             {
@@ -177,44 +199,46 @@ namespace Apu_Real_Estate__ARE_
         //read img path, address, legalform from the form
         private void ReadGeneralData(bool isUpdate)
         {
-            if (estate != null)
+            if (string.IsNullOrWhiteSpace(txtCategory1.Text) || string.IsNullOrWhiteSpace(txtCategory2.Text))
             {
-                //set id, idIndex is not changed if update button pressed
-                if (!isUpdate)
-                {
-                    estate.ID = idIndex;
-                    idIndex++;
-                }
-                else
-                {
-                    estate.ID = idIndex;
-                }
-                //set address, legal form,
-                estate.Address = new Address(txtStreet.Text, txtCity.Text, txtZipCode.Text, (Countries)cmbCountry.SelectedIndex);
-                estate.LegalForm = (LegalForm)cmbLegalForm.SelectedIndex;
-
-                //set img file path
-                //if (file.ShowDialog() == DialogResult.OK)
-                //{
-                //    if (!string.IsNullOrEmpty(file.FileName))
-                //    {
-                //        try
-                //        {
-                //            estate.ImagePath = file.FileName;
-                //            picBoxEstate.Image = Image.FromFile(estate.ImagePath);
-                //        }
-                //        catch (Exception ex) // Catch a broader exception for various file issues
-                //        {
-                //            MessageBox.Show("Error loading image: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //        }
-                //    }
-                //}
-                // hardcoded path
-                estate.ImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Resources\Asg1.jpg");
-                picBoxEstate.Image = Image.FromFile(estate.ImagePath);
-
-                estateDB.AddEstate(estate);
+                estate = new Estate();
             }
+            //set id, idIndex is not changed if update button pressed
+            if (!isUpdate)
+            {
+                estate.ID = idIndex;
+                idIndex++;
+            }
+            else
+            {
+                estate.ID = idIndex;
+            }
+            //set address, legal form,
+            estate.Address = new Address(txtStreet.Text, txtCity.Text, txtZipCode.Text, (Countries)cmbCountry.SelectedIndex);
+            estate.LegalForm = (LegalForm)cmbLegalForm.SelectedIndex;
+            estate.EstateType = (EstateType)cmbTypeEstate.SelectedIndex;
+            //set img file path
+            //if (file.ShowDialog() == DialogResult.OK)
+            //{
+            //    if (!string.IsNullOrEmpty(file.FileName))
+            //    {
+            //        try
+            //        {
+            //            estate.ImagePath = file.FileName;
+            //            picBoxEstate.Image = Image.FromFile(estate.ImagePath);
+            //        }
+            //        catch (Exception ex) // Catch a broader exception for various file issues
+            //        {
+            //            MessageBox.Show("Error loading image: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //        }
+            //    }
+            //}
+            // hardcoded path
+            estate.ImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Resources\Asg1.jpg");
+            picBoxEstate.Image = Image.FromFile(estate.ImagePath);
+
+            estateDB.AddEstate(estate);
+
         }
 
         // Creates a new estate object based on the selected type.
@@ -222,17 +246,20 @@ namespace Apu_Real_Estate__ARE_
         {
             estate = null;
             EstateType estateType = (EstateType)cmbTypeEstate.SelectedIndex;
-            switch (estateType)
+            if (!string.IsNullOrWhiteSpace(txtCategory1.Text) || !string.IsNullOrWhiteSpace(txtCategory2.Text))
             {
-                case EstateType.Residential:
-                    CreateResidentialType();
-                    break;
-                case EstateType.Commercial:
-                    CreateCommercialType();
-                    break;
-                case EstateType.Institutional:
-                    CreateInstitutionalType();
-                    break;
+                switch (estateType)
+                {
+                    case EstateType.Residential:
+                        CreateResidentialType();
+                        break;
+                    case EstateType.Commercial:
+                        CreateCommercialType();
+                        break;
+                    case EstateType.Institutional:
+                        CreateInstitutionalType();
+                        break;
+                }
             }
         }
         private void CreateInstitutionalType()
@@ -532,6 +559,14 @@ namespace Apu_Real_Estate__ARE_
                     break;
             }
         }
+
+        private int GetIDFromSelectedEstate(string data)
+        {
+            string[] partsData = data.Split(",");
+            partsData[0] = RemovePrefix(partsData[0], "ID ");
+            bool tryParsing = Int32.TryParse(partsData[0], out int result);
+            return result;
+        }
         //remove comma
         private string RemovePrefix(string data, string prefix)
         {
@@ -561,7 +596,7 @@ namespace Apu_Real_Estate__ARE_
             AddEstate(false);
             //add estate to ListManager if there is no input error
             if (isError == false)
-             {
+            {
                 //estateManager.Add(estate);
                 UpdateGUI();
                 ResetAllTextField();
@@ -582,7 +617,8 @@ namespace Apu_Real_Estate__ARE_
             {
                 string selectedItem = lstEstate.SelectedItem?.ToString() ?? "No item selected";
                 lblEstateItem.Text = selectedItem;
-                FillDataToForm(selectedItem);
+                //FillDataToForm(selectedItem);
+                selectedEstateID = GetIDFromSelectedEstate(selectedItem);
             }
         }
 
@@ -592,7 +628,7 @@ namespace Apu_Real_Estate__ARE_
             int index = lstEstate.SelectedIndex;
             lstEstate.Items.RemoveAt(index);
             //estateManager.DeleteAt(index);
-            estateDB.DeleteEstate(index);
+            estateDB.DeleteEstate(selectedEstateID);
             picBoxEstate.Image = null;
             ResetAllTextField();
         }

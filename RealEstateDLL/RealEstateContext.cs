@@ -22,10 +22,9 @@ namespace RealEstateDLL
 
             // Configure one-to-one relationship between Estate and Address
             modelBuilder.Entity<Estate>()
-                .HasOne(e => e.Address)
-                .WithMany()
-                .HasForeignKey(e => e.AddressId)
-                .OnDelete(DeleteBehavior.Cascade);
+                 .HasOne(e => e.Address)
+                 .WithOne(a => a.Estate)
+                .HasForeignKey<Estate>(e => e.AddressId);
         }
     }
 }

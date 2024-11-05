@@ -18,5 +18,7 @@ namespace RealEstateDLL.Entities
         public string zipCode { get; set; }
         public Countries country { get; set; }
 
+        public Estate Estate { get; set; }
+
     }
 }

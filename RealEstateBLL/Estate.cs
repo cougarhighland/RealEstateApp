@@ -19,6 +19,7 @@ namespace RealEstateBLL
         private Address address;
         private string imagePath;
         private LegalForm legalForm;
+        private EstateType m_EstateType;
         //properties
         public int ID
         {
@@ -43,10 +44,16 @@ namespace RealEstateBLL
             set { legalForm = value; }
         }
 
+        public EstateType EstateType
+        {
+            get { return m_EstateType; }
+            set { m_EstateType = value; }
+        }
+
         // Overridden ToString method
         public override string ToString()
         {
-            return $"ID {ID},Address {address.ToString()},Legal Form {legalForm},";
+            return $"ID {ID},Address {address.ToString()}, Residential Type {m_EstateType}, Legal Form {legalForm},";
         }
 
         public virtual string GetDetails() { return ""; }

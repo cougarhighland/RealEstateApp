@@ -17,6 +17,7 @@ namespace RealEstateBLL
         private Countries country;
         
         // Constructor
+        public Address() { }
         public Address(string str, string ct, string zip, Countries ctr)
         {
             this.street = str;
