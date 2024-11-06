@@ -15,11 +15,6 @@ namespace RealEstateDLL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Set up primary key for Estate
-            modelBuilder.Entity<Estate>()
-                .Property(e => e.ID)
-                .ValueGeneratedOnAdd();
-
             // Configure one-to-one relationship between Estate and Address
             modelBuilder.Entity<Estate>()
                  .HasOne(e => e.Address)

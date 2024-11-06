@@ -10,7 +10,7 @@ namespace RealEstateDLL.Entities
 {
     public class Estate
     {
-        //primary key for estate
+        //primary key for estate and auto generated
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; } 

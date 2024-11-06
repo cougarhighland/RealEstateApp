@@ -10,6 +10,7 @@ namespace RealEstateDLL.Entities
 {
     public class Address
     {
+        //automated generate AddressID 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AddressId { get; set; }  
@@ -17,7 +18,7 @@ namespace RealEstateDLL.Entities
         public string city { get; set; }
         public string zipCode { get; set; }
         public Countries country { get; set; }
-
+        // navigation property for the estate associated with the address.
         public Estate Estate { get; set; }
 
     }
